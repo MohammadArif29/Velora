@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Velora</title>
+    <link rel="stylesheet" href="../css/themes.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/auth.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <!-- Theme-specific CSS will be loaded dynamically by JavaScript -->
+    <link id="theme-css" rel="stylesheet" href="../css/dark-theme.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="admin-body">
+    <!-- Admin Login Section -->
+    <section class="admin-login-section">
+        <div class="admin-login-container">
+            <!-- Background Elements -->
+            <div class="admin-bg-elements">
+                <div class="admin-bg-circle admin-bg-circle-1"></div>
+                <div class="admin-bg-circle admin-bg-circle-2"></div>
+                <div class="admin-bg-circle admin-bg-circle-3"></div>
+            </div>
+
+            <div class="admin-login-card">
+                <div class="admin-header">
+                    <div class="admin-logo">
+                        <i class="fas fa-shield-alt admin-icon"></i>
+                        <h1>Velora Admin</h1>
+                        <p>Administrative Control Panel</p>
+                    </div>
+                </div>
+
+                <!-- Success Message (hidden by default) -->
+                <div class="success-message" id="successMessage">
+                    <div>
+                        <strong>Login Successful! 🎉</strong><br>
+                        Redirecting to admin dashboard...
+                    </div>
+                </div>
+
+                <!-- Admin Login Form -->
+                <form class="admin-form" id="adminLoginForm">
+                    <div class="form-grid">
+                        <!-- Admin ID -->
+                        <div class="form-group">
+                            <label for="adminId">Admin ID</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-user-shield input-icon"></i>
+                                <input type="text" id="adminId" name="adminId" placeholder="Enter your admin ID" required autocomplete="username">
+                                <span class="input-focus"></span>
+                            </div>
+                            <div class="error-message" id="adminIdError"></div>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-key input-icon"></i>
+                                <input type="password" id="password" name="password" placeholder="Enter your password" required autocomplete="current-password">
+                                <button type="button" class="password-toggle" id="passwordToggle">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <span class="input-focus"></span>
+                            </div>
+                            <div class="error-message" id="passwordError"></div>
+                        </div>
+                    </div>
+
+                    <!-- Remember Me -->
+                    <div class="form-extras">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="rememberMe" name="rememberMe">
+                            <label for="rememberMe" class="checkbox-label">
+                                <span class="checkbox-custom"></span>
+                                Keep me signed in
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary btn-large admin-submit" id="submitBtn">
+                        <span class="btn-text">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Access Admin Panel
+                        </span>
+                        <div class="btn-loader" style="display: none;">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </div>
+                    </button>
+                </form>
+
+                <!-- Security Notice -->
+                <div class="admin-security-notice">
+                    <div class="security-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="security-content">
+                        <h4>Secure Access</h4>
+                        <p>This is a restricted area. All access attempts are logged and monitored.</p>
+                    </div>
+                </div>
+
+                <!-- Theme Toggle -->
+                <div class="admin-theme-toggle">
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- System Status -->
+    <div class="system-status" id="systemStatus">
+        <div class="status-indicator">
+            <div class="status-dot"></div>
+            <span>System Online</span>
+        </div>
+    </div>
+
+    <script src="../js/themes.js"></script>
+    <script src="js/admin-login.js"></script>
+</body>
+</html>

@@ -1,0 +1,480 @@
+/* Velora Light Theme - Clean & Professional */
+
+:root {
+    /* Core Brand Colors */
+    --primary-base: #5A31F4;
+    --secondary-accent: #2CE5FF;
+    --highlight-accent: #20E3B2;
+    --alert-warning: #FF4ECD;
+    
+    /* Light Theme Backgrounds */
+    --bg-primary: #FFFFFF;
+    --bg-secondary: #F8F9FA;
+    --surface: #FFFFFF;
+    --surface-glow: #F3F4F6;
+    
+    /* Light Theme Text */
+    --text-primary: #1F2937;
+    --text-secondary: #6B7280;
+    
+    /* Light Theme UI Elements */
+    --border: #E5E7EB;
+    --shadow: rgba(0, 0, 0, 0.1);
+    --glass-bg: rgba(255, 255, 255, 0.95);
+    --glass-bg-scrolled: rgba(255, 255, 255, 0.98);
+}
+
+/* Light Theme Specific Overrides */
+
+/* Navbar */
+.navbar {
+    background: var(--glass-bg) !important;
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(20px);
+}
+
+.navbar.scrolled {
+    background: var(--glass-bg-scrolled) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Override any dark theme navbar styles when in light mode */
+[data-theme="light"] .navbar {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+[data-theme="light"] .navbar.scrolled {
+    background: rgba(255, 255, 255, 0.98) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.nav-link {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.nav-link:hover {
+    color: var(--primary-base);
+}
+
+/* Brand text in light theme */
+.brand-text {
+    background: linear-gradient(135deg, var(--primary-base), var(--secondary-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Theme toggle in light theme */
+.theme-toggle {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+}
+
+.theme-toggle:hover {
+    background: var(--surface-glow);
+    color: var(--primary-base);
+    border-color: var(--primary-base);
+}
+
+/* Hero Section */
+.hero {
+    background: 
+        radial-gradient(ellipse at top, rgba(90, 49, 244, 0.06), transparent 50%),
+        radial-gradient(ellipse at bottom right, rgba(44, 229, 255, 0.04), transparent 50%),
+        var(--bg-primary);
+}
+
+.hero-badge {
+    background: var(--surface);
+    border: 1px solid var(--primary-base);
+    color: var(--primary-base);
+    box-shadow: 0 2px 8px rgba(90, 49, 244, 0.1);
+    font-weight: 600;
+}
+
+.hero-badge i {
+    color: var(--primary-base);
+}
+
+/* Hero title in light theme */
+.hero-title {
+    color: var(--text-primary);
+    font-weight: 800;
+}
+
+/* Hero description in light theme */
+.hero-description {
+    color: var(--text-secondary);
+    font-weight: 400;
+}
+
+/* Hero stats in light theme */
+.stat-number {
+    color: var(--primary-base);
+    font-weight: 800;
+}
+
+.stat-label {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* Phone Mockup */
+.phone-mockup {
+    background: linear-gradient(145deg, #1a1a1a, #2d2d2d) !important;
+    box-shadow: 
+        0 25px 80px rgba(0, 0, 0, 0.15),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+.phone-screen {
+    background: var(--bg-primary);
+    border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Status bar in light theme */
+.app-status-bar {
+    color: var(--text-primary);
+}
+
+/* App preview elements in light theme */
+.app-title {
+    color: var(--primary-base);
+    font-weight: 700;
+}
+
+.app-location {
+    color: var(--text-secondary);
+}
+
+.ride-destination {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.ride-fare {
+    color: var(--highlight-accent);
+    font-weight: 700;
+}
+
+/* Floating Cards */
+.floating-card {
+    background: white;
+    border: 1px solid var(--primary-base);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.08),
+        0 0 0 1px rgba(90, 49, 244, 0.1);
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.floating-card:hover {
+    box-shadow: 
+        0 12px 40px rgba(0, 0, 0, 0.12),
+        0 0 0 1px rgba(90, 49, 244, 0.2);
+    transform: translateY(-2px);
+}
+
+.floating-card i {
+    color: var(--primary-base);
+}
+
+/* Features Section */
+.features {
+    background: var(--bg-secondary);
+}
+
+.section-title {
+    color: var(--text-primary);
+    font-weight: 800;
+}
+
+.section-description {
+    color: var(--text-secondary);
+    font-weight: 400;
+}
+
+.feature-category {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.feature-category:hover {
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.1),
+        0 0 0 1px rgba(90, 49, 244, 0.1);
+    transform: translateY(-2px);
+}
+
+.category-title {
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+.category-title i {
+    color: var(--primary-base);
+}
+
+.feature-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+}
+
+.feature-card:hover {
+    border-color: var(--primary-base);
+    box-shadow: 0 8px 32px rgba(90, 49, 244, 0.12);
+    transform: translateY(-2px);
+}
+
+.feature-card h4 {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.feature-card p {
+    color: var(--text-secondary);
+    font-weight: 400;
+}
+
+/* Buttons Light Theme */
+.btn-outline {
+    background: transparent;
+    color: var(--text-primary);
+    border: 2px solid var(--primary-base);
+    font-weight: 600;
+}
+
+.btn-outline:hover {
+    background: var(--primary-base);
+    border-color: var(--primary-base);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(90, 49, 244, 0.2);
+}
+
+/* Primary buttons in light theme */
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-base), var(--secondary-accent));
+    color: white;
+    box-shadow: 0 4px 15px rgba(90, 49, 244, 0.2);
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(90, 49, 244, 0.3);
+}
+
+/* How It Works Section */
+.how-it-works {
+    background: var(--bg-primary);
+}
+
+.step {
+    color: var(--text-primary);
+}
+
+.step h3 {
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+.step p {
+    color: var(--text-secondary);
+    font-weight: 400;
+}
+
+.step-number {
+    background: linear-gradient(135deg, var(--primary-base), var(--secondary-accent));
+    box-shadow: 
+        0 8px 32px rgba(90, 49, 244, 0.25),
+        0 0 0 1px rgba(44, 229, 255, 0.15);
+    color: white;
+    font-weight: 800;
+}
+
+/* CTA Section */
+.cta {
+    background: 
+        linear-gradient(135deg, var(--primary-base), var(--secondary-accent)),
+        radial-gradient(ellipse at center, rgba(32, 227, 178, 0.1), transparent);
+}
+
+.cta .btn-primary {
+    background: white;
+    color: var(--primary-base);
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
+}
+
+.cta .btn-primary:hover {
+    background: #f8f9fa;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(255, 255, 255, 0.4);
+}
+
+.cta .btn-outline {
+    border-color: rgba(255, 255, 255, 0.8);
+    color: white;
+}
+
+.cta .btn-outline:hover {
+    background: white;
+    color: var(--primary-base);
+    border-color: white;
+}
+
+/* Footer */
+.footer {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+}
+
+.footer-brand p {
+    color: var(--text-secondary);
+    font-weight: 400;
+}
+
+.link-group h4 {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.link-group a {
+    color: var(--text-secondary);
+    font-weight: 400;
+}
+
+.link-group a:hover {
+    color: var(--primary-base);
+}
+
+.footer-bottom p {
+    color: var(--text-secondary);
+}
+
+.footer-social a {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+}
+
+.footer-social a:hover {
+    background: var(--primary-base);
+    color: white;
+    border-color: var(--primary-base);
+    box-shadow: 0 4px 12px rgba(90, 49, 244, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Form Elements */
+input, textarea, select {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: var(--primary-base);
+    box-shadow: 0 0 0 3px rgba(90, 49, 244, 0.05);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-base);
+}
+
+/* Selection */
+::selection {
+    background: rgba(90, 49, 244, 0.15);
+    color: var(--text-primary);
+}
+
+/* Light Theme Shadows */
+.shadow-light {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.shadow-light-lg {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* Light Theme Specific Components */
+.card-light {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.card-light:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+}
+
+/* Light Theme Animations */
+@keyframes lightPulse {
+    0%, 100% { 
+        box-shadow: 0 0 20px rgba(90, 49, 244, 0.1);
+    }
+    50% { 
+        box-shadow: 0 0 30px rgba(90, 49, 244, 0.2);
+    }
+}
+
+.pulse-light {
+    animation: lightPulse 2s infinite;
+}
+
+/* Light Theme Gradients */
+.gradient-light {
+    background: linear-gradient(135deg, #FFFFFF, #F9FAFB);
+}
+
+.gradient-light-primary {
+    background: linear-gradient(135deg, rgba(90, 49, 244, 0.05), rgba(44, 229, 255, 0.02));
+}
+
+/* Light Theme Glass Effect */
+.glass-light {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Light Theme Text Variations */
+.text-muted-light {
+    color: #9CA3AF;
+}
+
+.text-accent-light {
+    color: var(--primary-base);
+    font-weight: 600;
+}
+
+/* Light Theme Hover States */
+.hover-lift-light:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+}
+
+.hover-glow-light:hover {
+    box-shadow: 0 0 20px rgba(90, 49, 244, 0.15);
+}

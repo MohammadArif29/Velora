@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velora - Smart Transportation for MBU Students</title>
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Theme-specific CSS will be loaded dynamically by JavaScript -->
+    <link id="theme-css" rel="stylesheet" href="css/dark-theme.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-car-side brand-icon"></i>
+                <span class="brand-text">Velora</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#how-it-works" class="nav-link">How It Works</a>
+                <a href="#about" class="nav-link">About</a>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+            <div class="nav-auth">
+                <a href="pages/login.html" class="btn btn-outline">Login</a>
+                <a href="pages/signup.html" class="btn btn-primary">Sign Up</a>
+            </div>
+            <div class="mobile-menu-toggle" id="mobileToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-university"></i>
+                    <span>Exclusively for MBU Students</span>
+                </div>
+                <h1 class="hero-title">
+                    Smart Transportation
+                    <span class="gradient-text">Made Simple</span>
+                </h1>
+                <p class="hero-description">
+                    Velora revolutionizes campus transportation with AI-powered ride matching, 
+                    transparent pricing, and real-time tracking. Never wait for an auto again.
+                </p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Active Students</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Verified Drivers</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">95%</div>
+                        <div class="stat-label">On-time Rate</div>
+                    </div>
+                </div>
+                <div class="hero-actions">
+                    <a href="pages/signup.html" class="btn btn-primary btn-large">
+                        <i class="fas fa-rocket"></i>
+                        Get Started Now
+                    </a>
+                    <button class="btn btn-outline btn-large" id="learnMoreBtn">
+                        <i class="fas fa-play"></i>
+                        Watch Demo
+                    </button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="phone-mockup">
+                    <div class="phone-screen">
+                        <div class="app-status-bar">
+                            <div class="status-left">
+                                <span>9:41</span>
+                            </div>
+                            <div class="status-right">
+                                <span>📶</span>
+                                <span>📶</span>
+                                <span>🔋</span>
+                            </div>
+                        </div>
+                        <div class="app-preview">
+                            <div class="app-header">
+                                <div class="app-title">Velora</div>
+                                <div class="app-location">MBU Campus</div>
+                            </div>
+                            <div class="map-preview">
+                                <div class="map-pin"></div>
+                                <div class="map-destination"></div>
+                                <div class="route-line"></div>
+                                <div class="map-building building-1"></div>
+                                <div class="map-building building-2"></div>
+                                <div class="map-building building-3"></div>
+                                <div class="traffic-dot traffic-1"></div>
+                                <div class="traffic-dot traffic-2"></div>
+                            </div>
+                            <div class="ride-card">
+                                <div class="ride-info">
+                                    <span class="ride-destination">Tirupati Station</span>
+                                    <span class="ride-fare">45</span>
+                                </div>
+                                <button class="ride-book">Book Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="floating-elements">
+                    <div class="floating-card card-1">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Real-time Tracking</span>
+                    </div>
+                    <div class="floating-card card-2">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Safe & Secure</span>
+                    </div>
+                    <div class="floating-card card-3">
+                        <i class="fas fa-bolt"></i>
+                        <span>Instant Booking</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Powerful Features</h2>
+                <p class="section-description">
+                    Everything you need for seamless campus transportation
+                </p>
+            </div>
+            <div class="features-grid">
+                <!-- Student Features -->
+                <div class="feature-category">
+                    <h3 class="category-title">
+                        <i class="fas fa-user-graduate"></i>
+                        For Students
+                    </h3>
+                    <div class="feature-cards">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <h4>One-Tap Booking</h4>
+                            <p>Book rides instantly or schedule for later with just one tap</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-map-marked-alt"></i>
+                            </div>
+                            <h4>Live Tracking</h4>
+                            <p>Track your ride in real-time with accurate ETA updates</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-calculator"></i>
+                            </div>
+                            <h4>Transparent Pricing</h4>
+                            <p>See exact fare before booking - no hidden charges</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h4>Ride Sharing</h4>
+                            <p>Share rides with fellow students and save money</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Driver Features -->
+                <div class="feature-category">
+                    <h3 class="category-title">
+                        <i class="fas fa-car"></i>
+                        For Drivers
+                    </h3>
+                    <div class="feature-cards">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-bell"></i>
+                            </div>
+                            <h4>Smart Notifications</h4>
+                            <p>Get notified of nearby ride requests instantly</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h4>Earnings Dashboard</h4>
+                            <p>Track your daily, weekly, and monthly earnings</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-route"></i>
+                            </div>
+                            <h4>Optimized Routes</h4>
+                            <p>AI suggests the best routes for maximum efficiency</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <h4>Rating System</h4>
+                            <p>Build your reputation with student ratings</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Features -->
+                <div class="feature-category">
+                    <h3 class="category-title">
+                        <i class="fas fa-brain"></i>
+                        AI-Powered
+                    </h3>
+                    <div class="feature-cards">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                            <h4>Demand Prediction</h4>
+                            <p>AI predicts peak times and optimizes driver availability</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-sync-alt"></i>
+                            </div>
+                            <h4>Smart Matching</h4>
+                            <p>Intelligent driver-student matching for faster pickups</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <h4>Peak Time Alerts</h4>
+                            <p>Get notified about holiday rush and book in advance</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-moon"></i>
+                            </div>
+                            <h4>Night Mode Safety</h4>
+                            <p>Enhanced safety features for late-night travels</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How It Works</h2>
+                <p class="section-description">
+                    Get started in just 3 simple steps
+                </p>
+            </div>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Sign Up & Verify</h3>
+                        <p>Create your account using your MBU student ID for instant verification</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Book Your Ride</h3>
+                        <p>Select pickup point, destination, and preferred time - see fare upfront</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Track & Travel</h3>
+                        <p>Get matched with verified drivers and track your ride in real-time</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Transform Your Campus Commute?</h2>
+                <p>Join hundreds of MBU students who've already made the switch to smarter transportation</p>
+                <div class="cta-buttons">
+                    <a href="pages/signup.html" class="btn btn-primary btn-large">
+                        <i class="fas fa-user-plus"></i>
+                        Sign Up as Student
+                    </a>
+                    <a href="pages/signup.html" class="btn btn-outline btn-large">
+                        <i class="fas fa-car"></i>
+                        Join as Driver
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="brand">
+                        <i class="fas fa-car-side brand-icon"></i>
+                        <span class="brand-text">Velora</span>
+                    </div>
+                    <p>Smart transportation for the smart generation</p>
+                </div>
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h4>Product</h4>
+                        <a href="#features">Features</a>
+                        <a href="#pricing">Pricing</a>
+                        <a href="#safety">Safety</a>
+                    </div>
+                    <div class="link-group">
+                        <h4>Support</h4>
+                        <a href="#help">Help Center</a>
+                        <a href="#contact">Contact</a>
+                        <a href="#faq">FAQ</a>
+                    </div>
+                    <div class="link-group">
+                        <h4>Company</h4>
+                        <a href="#about">About</a>
+                        <a href="#careers">Careers</a>
+                        <a href="#blog">Blog</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Velora. All rights reserved.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

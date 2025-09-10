@@ -1,0 +1,270 @@
+/* Velora Dark Theme - Indigo Pulse Mobility */
+
+:root {
+    /* Core Brand Colors */
+    --primary-base: #5A31F4;
+    --secondary-accent: #1AD1FF;
+    --highlight-accent: #00F59C;
+    --alert-warning: #FF3EA5;
+    
+    /* Dark Theme Backgrounds */
+    --bg-primary: #0A0A12;
+    --bg-secondary: #161632;
+    --surface: #161632;
+    --surface-glow: #32275F;
+    
+    /* Dark Theme Text */
+    --text-primary: #F5F5F7;
+    --text-secondary: #A7A7B5;
+    
+    /* Dark Theme UI Elements */
+    --border: #32275F;
+    --shadow: rgba(0, 0, 0, 0.5);
+    --glass-bg: rgba(10, 10, 18, 0.95);
+    --glass-bg-scrolled: rgba(10, 10, 18, 0.98);
+}
+
+/* Dark Theme Specific Overrides */
+
+/* Navbar */
+.navbar {
+    background: var(--glass-bg) !important;
+    border-bottom: 1px solid var(--border);
+}
+
+.navbar.scrolled {
+    background: var(--glass-bg-scrolled) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Override any light theme navbar styles when in dark mode */
+[data-theme="dark"] .navbar {
+    background: rgba(10, 10, 18, 0.95) !important;
+    border-bottom: 1px solid #32275F;
+}
+
+[data-theme="dark"] .navbar.scrolled {
+    background: rgba(10, 10, 18, 0.98) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Hero Section */
+.hero {
+    background: 
+        radial-gradient(ellipse at top, rgba(90, 49, 244, 0.15), transparent 50%),
+        radial-gradient(ellipse at bottom right, rgba(26, 209, 255, 0.08), transparent 50%),
+        var(--bg-primary);
+}
+
+.hero-badge {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Phone Mockup */
+.phone-mockup {
+    background: linear-gradient(145deg, var(--surface), var(--bg-secondary));
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.4),
+        0 0 0 1px var(--border);
+}
+
+.phone-screen {
+    background: var(--bg-primary);
+}
+
+/* Floating Cards */
+.floating-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(90, 49, 244, 0.1);
+    color: var(--text-primary);
+}
+
+.floating-card:hover {
+    box-shadow: 
+        0 12px 40px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(90, 49, 244, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Features Section */
+.features {
+    background: var(--bg-secondary);
+}
+
+.feature-category {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.feature-category:hover {
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.2),
+        0 0 0 1px rgba(90, 49, 244, 0.1);
+}
+
+.feature-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+}
+
+.feature-card:hover {
+    border-color: var(--primary-base);
+    box-shadow: 0 8px 32px rgba(90, 49, 244, 0.15);
+}
+
+/* Buttons Dark Theme */
+.btn-outline {
+    background: transparent;
+    color: var(--text-primary);
+    border: 2px solid var(--border);
+}
+
+.btn-outline:hover {
+    background: var(--surface-glow);
+    border-color: var(--primary-base);
+    color: var(--text-primary);
+}
+
+/* Theme Toggle */
+.theme-toggle {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+}
+
+.theme-toggle:hover {
+    background: var(--surface-glow);
+    color: var(--primary-base);
+    border-color: var(--primary-base);
+}
+
+/* How It Works Section */
+.how-it-works {
+    background: var(--bg-primary);
+}
+
+.step-number {
+    background: linear-gradient(135deg, var(--primary-base), var(--secondary-accent));
+    box-shadow: 
+        0 8px 32px rgba(90, 49, 244, 0.4),
+        0 0 0 1px rgba(26, 209, 255, 0.2);
+}
+
+/* CTA Section */
+.cta {
+    background: 
+        linear-gradient(135deg, var(--primary-base), var(--secondary-accent)),
+        radial-gradient(ellipse at center, rgba(0, 245, 156, 0.1), transparent);
+}
+
+.cta .btn-primary {
+    background: white;
+    color: var(--primary-base);
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+}
+
+.cta .btn-primary:hover {
+    background: #f8f9fa;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(255, 255, 255, 0.3);
+}
+
+.cta .btn-outline {
+    border-color: rgba(255, 255, 255, 0.8);
+    color: white;
+}
+
+.cta .btn-outline:hover {
+    background: white;
+    color: var(--primary-base);
+    border-color: white;
+}
+
+/* Footer */
+.footer {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+}
+
+.footer-social a {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+}
+
+.footer-social a:hover {
+    background: var(--primary-base);
+    color: white;
+    border-color: var(--primary-base);
+    box-shadow: 0 4px 12px rgba(90, 49, 244, 0.3);
+}
+
+/* Form Elements */
+input, textarea, select {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: var(--primary-base);
+    box-shadow: 0 0 0 3px rgba(90, 49, 244, 0.1);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--surface-glow);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-base);
+}
+
+/* Selection */
+::selection {
+    background: rgba(90, 49, 244, 0.3);
+    color: var(--text-primary);
+}
+
+/* Glow Effects */
+.glow-primary {
+    box-shadow: 0 0 20px rgba(90, 49, 244, 0.5);
+}
+
+.glow-secondary {
+    box-shadow: 0 0 20px rgba(26, 209, 255, 0.5);
+}
+
+.glow-accent {
+    box-shadow: 0 0 20px rgba(0, 245, 156, 0.5);
+}
+
+/* Dark Theme Animations */
+@keyframes darkPulse {
+    0%, 100% { 
+        box-shadow: 0 0 20px rgba(90, 49, 244, 0.3);
+    }
+    50% { 
+        box-shadow: 0 0 30px rgba(90, 49, 244, 0.6);
+    }
+}
+
+.pulse-dark {
+    animation: darkPulse 2s infinite;
+}

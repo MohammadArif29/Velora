@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Captain Dashboard - Velora</title>
+    
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="../css/themes.css">
+    <link rel="stylesheet" href="../css/dark-theme.css">
+    <link rel="stylesheet" href="../css/light-theme.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Captain Dashboard CSS -->
+    <link rel="stylesheet" href="../css/captain-dashboard.css">
+</head>
+<body>
+    <!-- Mobile App Header -->
+    <header class="mobile-header">
+        <div class="mobile-header-content">
+            <div class="mobile-header-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="mobile-logo">
+                    <i class="fas fa-car-side"></i>
+                    <span>Velora</span>
+                </div>
+            </div>
+            <div class="mobile-header-right">
+                <button class="theme-toggle-mobile" id="themeToggleMobile">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="notifications-btn-mobile" id="notificationsBtn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Desktop Header -->
+    <header class="desktop-header">
+        <div class="desktop-header-content">
+            <div class="desktop-header-left">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="page-title">Captain Dashboard</h1>
+            </div>
+            <div class="desktop-header-right">
+                <div class="status-toggle">
+                    <span class="status-label">Status:</span>
+                    <button class="status-btn online" id="statusToggle">
+                        <span class="status-dot"></span>
+                        ONLINE
+                    </button>
+                </div>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="notifications-btn" id="notificationsBtnDesktop">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </button>
+                <div class="user-profile" id="userProfile">
+                    <div class="user-avatar" id="userAvatar">RC</div>
+                    <div class="user-info">
+                        <h4 id="userName">Ravi Captain</h4>
+                        <p id="userType">Captain</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav-content">
+            <div class="mobile-nav-header">
+                <div class="mobile-nav-user">
+                    <div class="mobile-user-avatar">RC</div>
+                    <div class="mobile-user-info">
+                        <h4>Ravi Captain</h4>
+                        <p>Captain</p>
+                    </div>
+                </div>
+                <button class="mobile-nav-close" id="mobileNavClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="mobile-nav-menu">
+                <a href="#" class="mobile-nav-item active">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="mobile-nav-item">
+                    <i class="fas fa-route"></i>
+                    <span>Active Rides</span>
+                    <span class="nav-badge">2</span>
+                </a>
+                <a href="#" class="mobile-nav-item">
+                    <i class="fas fa-list"></i>
+                    <span>Ride Requests</span>
+                </a>
+                <a href="#" class="mobile-nav-item">
+                    <i class="fas fa-history"></i>
+                    <span>Trip History</span>
+                </a>
+                <a href="#" class="mobile-nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Earnings</span>
+                </a>
+                <a href="#" class="mobile-nav-item">
+                    <i class="fas fa-star"></i>
+                    <span>Ratings</span>
+                </a>
+                <a href="#" class="mobile-nav-item">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </a>
+                <a href="#" class="mobile-nav-item">
+                    <i class="fas fa-car"></i>
+                    <span>Vehicle Info</span>
+                </a>
+                <a href="#" class="mobile-nav-item">
+                    <i class="fas fa-id-card"></i>
+                    <span>KYC Status</span>
+                    <span class="nav-badge warning">Pending</span>
+                </a>
+                <a href="#" class="mobile-nav-item">
+                    <i class="fas fa-headset"></i>
+                    <span>Help Center</span>
+                </a>
+                <a href="#" class="mobile-nav-item" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Desktop Sidebar -->
+    <aside class="desktop-sidebar" id="desktopSidebar">
+        <div class="sidebar-content">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-car-side"></i>
+                </div>
+                <div class="sidebar-brand">Velora</div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Main</div>
+                    <a href="#" class="nav-item active">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-route"></i>
+                        <span>Active Rides</span>
+                        <span class="nav-badge">2</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-list"></i>
+                        <span>Ride Requests</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-history"></i>
+                        <span>Trip History</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">Business</div>
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Earnings</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Schedule</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-star"></i>
+                        <span>Ratings</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">Account</div>
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-car"></i>
+                        <span>Vehicle Info</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-id-card"></i>
+                        <span>KYC Status</span>
+                        <span class="nav-badge warning">Pending</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-bell"></i>
+                        <span>Notifications</span>
+                        <span class="nav-badge">5</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">Support</div>
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-headset"></i>
+                        <span>Help Center</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Safety</span>
+                    </a>
+                    <a href="#" class="nav-item" id="logoutBtnDesktop">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+            <div class="welcome-content">
+                <div class="welcome-text">
+                    <h2>Welcome back, <span id="welcomeName">Ravi</span>! 🚗</h2>
+                    <p>You're online and ready to serve MBU students</p>
+                </div>
+                <div class="welcome-actions">
+                    <button class="btn btn-primary" id="goOnlineBtn">
+                        <i class="fas fa-play"></i>
+                        Go Online
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Grid -->
+        <section class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-rupee-sign"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value">₹2,450</div>
+                        <div class="stat-label">Today's Earnings</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i>
+                            +15%
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value">8</div>
+                        <div class="stat-label">Rides Completed</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i>
+                            Today
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value">4.9</div>
+                        <div class="stat-label">Rating</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i>
+                            Top rated
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value">7.5hrs</div>
+                        <div class="stat-label">Online Time</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i>
+                            Today
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Actions -->
+        <section class="actions-section">
+            <h3 class="section-title">Quick Actions</h3>
+            <div class="actions-grid">
+                <button class="action-card" onclick="viewRideRequests()">
+                    <div class="action-icon">
+                        <i class="fas fa-list"></i>
+                    </div>
+                    <div class="action-content">
+                        <h4>Ride Requests</h4>
+                        <p>Accept incoming requests</p>
+                    </div>
+                    <div class="action-badge">3</div>
+                </button>
+                
+                <button class="action-card" onclick="manageActiveRides()">
+                    <div class="action-icon">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <div class="action-content">
+                        <h4>Active Rides</h4>
+                        <p>Manage current trips</p>
+                    </div>
+                    <div class="action-badge">2</div>
+                </button>
+                
+                <button class="action-card" onclick="viewEarnings()">
+                    <div class="action-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="action-content">
+                        <h4>Earnings</h4>
+                        <p>View detailed reports</p>
+                    </div>
+                </button>
+                
+                <button class="action-card" onclick="updateProfile()">
+                    <div class="action-icon">
+                        <i class="fas fa-user-edit"></i>
+                    </div>
+                    <div class="action-content">
+                        <h4>Profile</h4>
+                        <p>Update your info</p>
+                    </div>
+                </button>
+            </div>
+        </section>
+
+        <!-- KYC Status Card -->
+        <section class="kyc-section">
+            <div class="kyc-card">
+                <div class="kyc-header">
+                    <div class="kyc-icon">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <div class="kyc-content">
+                        <h3>KYC Verification</h3>
+                        <p>Complete your verification to start earning</p>
+                    </div>
+                    <div class="kyc-status pending">Pending</div>
+                </div>
+                <div class="kyc-actions">
+                    <button class="btn btn-outline" onclick="startKYC()">
+                        <i class="fas fa-upload"></i>
+                        Upload Documents
+                    </button>
+                    <button class="btn btn-primary" onclick="viewKYCStatus()">
+                        <i class="fas fa-eye"></i>
+                        View Status
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Activity -->
+        <section class="activity-section">
+            <div class="section-header">
+                <h3 class="section-title">Recent Activity</h3>
+                <button class="btn btn-text">View All</button>
+            </div>
+            <div class="activity-list">
+                <div class="activity-item">
+                    <div class="activity-icon success">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="activity-content">
+                        <h4>Ride Completed</h4>
+                        <p>Picked up John from MBU to Railway Station - ₹180</p>
+                        <span class="activity-time">30 min ago</span>
+                    </div>
+                </div>
+                
+                <div class="activity-item">
+                    <div class="activity-icon primary">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <div class="activity-content">
+                        <h4>Ride Started</h4>
+                        <p>En route to pick up Sarah from Hostel Block A</p>
+                        <span class="activity-time">1 hour ago</span>
+                    </div>
+                </div>
+                
+                <div class="activity-item">
+                    <div class="activity-icon info">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="activity-content">
+                        <h4>Rating Received</h4>
+                        <p>Student rated you 5 stars with positive feedback</p>
+                        <span class="activity-time">2 hours ago</span>
+                    </div>
+                </div>
+                
+                <div class="activity-item">
+                    <div class="activity-icon warning">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <div class="activity-content">
+                        <h4>Payment Received</h4>
+                        <p>₹150 credited to your wallet</p>
+                        <span class="activity-time">3 hours ago</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-bottom-nav">
+        <a href="#" class="bottom-nav-item active">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="#" class="bottom-nav-item">
+            <i class="fas fa-route"></i>
+            <span>Rides</span>
+        </a>
+        <a href="#" class="bottom-nav-item">
+            <i class="fas fa-chart-line"></i>
+            <span>Earnings</span>
+        </a>
+        <a href="#" class="bottom-nav-item">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+        </a>
+    </nav>
+
+    <!-- Overlay for mobile menu -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Scripts -->
+    <script src="../js/themes.js"></script>
+    <script src="../js/captain-dashboard.js"></script>
+</body>
+</html>

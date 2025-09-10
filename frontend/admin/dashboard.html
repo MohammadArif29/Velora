@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Velora</title>
+    
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="../css/themes.css">
+    <link rel="stylesheet" href="../css/dark-theme.css">
+    <link rel="stylesheet" href="../css/light-theme.css">
+    
+    <!-- Admin CSS -->
+    <link rel="stylesheet" href="css/admin.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="admin-header-content">
+            <div class="admin-brand">
+                <i class="fas fa-shield-alt"></i>
+                <h1>Velora Admin</h1>
+            </div>
+            
+            <div class="admin-header-actions">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                
+                <div class="admin-user-menu">
+                    <div class="admin-user-info">
+                        <i class="fas fa-user-shield"></i>
+                        <span id="adminUsername">Super Admin</span>
+                    </div>
+                    <div class="admin-user-dropdown">
+                        <a href="#" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Admin Sidebar -->
+    <aside class="admin-sidebar">
+        <nav class="admin-nav">
+            <ul class="admin-nav-list">
+                <li class="nav-item active">
+                    <a href="#dashboard" class="nav-link">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#users" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        <span>User Management</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#drivers" class="nav-link">
+                        <i class="fas fa-car"></i>
+                        <span>Driver Management</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#rides" class="nav-link">
+                        <i class="fas fa-route"></i>
+                        <span>Ride Management</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#analytics" class="nav-link">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Analytics</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#settings" class="nav-link">
+                        <i class="fas fa-cog"></i>
+                        <span>System Settings</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#security" class="nav-link">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Security</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+        <div class="admin-content">
+            <!-- Dashboard Overview -->
+            <section id="dashboard" class="admin-section active">
+                <div class="section-header">
+                    <h2>Dashboard Overview</h2>
+                    <p>Welcome to Velora Admin Panel</p>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalUsers">0</h3>
+                            <p>Total Users</p>
+                            <span class="stat-change positive">+12% this month</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-car"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalDrivers">0</h3>
+                            <p>Active Drivers</p>
+                            <span class="stat-change positive">+8% this month</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-route"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalRides">0</h3>
+                            <p>Total Rides</p>
+                            <span class="stat-change positive">+25% this month</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalRevenue">₹0</h3>
+                            <p>Total Revenue</p>
+                            <span class="stat-change positive">+18% this month</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="charts-row">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3>Ride Trends</h3>
+                            <div class="chart-controls">
+                                <button class="btn btn-sm active" data-period="7d">7 Days</button>
+                                <button class="btn btn-sm" data-period="30d">30 Days</button>
+                                <button class="btn btn-sm" data-period="90d">90 Days</button>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="rideTrendsChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3>User Growth</h3>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="userGrowthChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="activity-section">
+                    <div class="section-header">
+                        <h3>Recent Activity</h3>
+                        <a href="#" class="btn btn-outline">View All</a>
+                    </div>
+                    <div class="activity-list" id="recentActivity">
+                        <!-- Activity items will be loaded here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- User Management Section -->
+            <section id="users" class="admin-section">
+                <div class="section-header">
+                    <h2>User Management</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            Add User
+                        </button>
+                        <button class="btn btn-outline">
+                            <i class="fas fa-download"></i>
+                            Export
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <!-- Users will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Other sections will be added here -->
+        </div>
+    </main>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading...</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/themes.js"></script>
+    <script src="js/admin-dashboard.js"></script>
+</body>
+</html>
