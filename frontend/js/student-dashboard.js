@@ -1,8 +1,7 @@
-// Velora Captain Dashboard JavaScript
+// Velora Student Dashboard JavaScript
 
-class CaptainDashboard {
+class StudentDashboard {
     constructor() {
-        this.isOnline = true;
         this.currentTheme = localStorage.getItem('theme') || 'dark';
         this.init();
     }
@@ -27,12 +26,6 @@ class CaptainDashboard {
         
         if (themeToggle) {
             themeToggle.addEventListener('click', () => this.toggleTheme());
-        }
-
-        // Status toggle
-        const statusToggle = document.getElementById('statusToggle');
-        if (statusToggle) {
-            statusToggle.addEventListener('click', () => this.toggleStatus());
         }
 
         // Mobile menu
@@ -68,30 +61,6 @@ class CaptainDashboard {
         
         if (logoutBtnDesktop) {
             logoutBtnDesktop.addEventListener('click', () => this.logout());
-        }
-
-        // Go online button
-        const goOnlineBtn = document.getElementById('goOnlineBtn');
-        if (goOnlineBtn) {
-            goOnlineBtn.addEventListener('click', () => this.goOnline());
-        }
-
-        // KYC buttons
-        const startKYCBtn = document.querySelector('[onclick="startKYC()"]');
-        const viewKYCStatusBtn = document.querySelector('[onclick="viewKYCStatus()"]');
-        
-        if (startKYCBtn) {
-            startKYCBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.startKYC();
-            });
-        }
-        
-        if (viewKYCStatusBtn) {
-            viewKYCStatusBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.viewKYCStatus();
-            });
         }
 
         // Window resize handler
@@ -132,30 +101,12 @@ class CaptainDashboard {
         localStorage.setItem('theme', theme);
         this.currentTheme = theme;
         
-        console.log(`Captain Dashboard theme switched to: ${theme}`);
+        console.log(`Student Dashboard theme switched to: ${theme}`);
     }
 
     toggleTheme() {
         const newTheme = this.currentTheme === 'light' ? 'dark' : 'light';
         this.setTheme(newTheme);
-    }
-
-    toggleStatus() {
-        this.isOnline = !this.isOnline;
-        const statusBtn = document.getElementById('statusToggle');
-        const statusDot = statusBtn.querySelector('.status-dot');
-        
-        if (this.isOnline) {
-            statusBtn.classList.remove('offline');
-            statusBtn.classList.add('online');
-            statusBtn.innerHTML = '<span class="status-dot"></span>ONLINE';
-            this.showNotification('You are now online', 'success');
-        } else {
-            statusBtn.classList.remove('online');
-            statusBtn.classList.add('offline');
-            statusBtn.innerHTML = '<span class="status-dot"></span>OFFLINE';
-            this.showNotification('You are now offline', 'info');
-        }
     }
 
     setupMobileNavigation() {
@@ -231,15 +182,19 @@ class CaptainDashboard {
         // Get user info from localStorage or API
         const userInfo = JSON.parse(localStorage.getItem('velora_user') || '{}');
         
-        if (userInfo.username) {
+        if (userInfo.username || userInfo.fullName) {
+            const userName = userInfo.fullName || userInfo.username;
+            const firstName = userName.split(' ')[0];
+            const initials = userName.split(' ').map(name => name[0]).join('').toUpperCase();
+            
             const userNameElements = document.querySelectorAll('#userName, .mobile-user-info h4');
             const userAvatarElements = document.querySelectorAll('#userAvatar, .mobile-user-avatar');
             const welcomeNameElement = document.getElementById('welcomeName');
             
-            userNameElements.forEach(el => el.textContent = userInfo.username);
-            userAvatarElements.forEach(el => el.textContent = userInfo.username.charAt(0).toUpperCase());
+            userNameElements.forEach(el => el.textContent = userName);
+            userAvatarElements.forEach(el => el.textContent = initials);
             if (welcomeNameElement) {
-                welcomeNameElement.textContent = userInfo.username.split(' ')[0];
+                welcomeNameElement.textContent = firstName;
             }
         }
     }
@@ -258,18 +213,18 @@ class CaptainDashboard {
     loadStats() {
         // Mock data - replace with actual API calls
         const stats = {
-            todayEarnings: 2450,
-            ridesCompleted: 8,
-            rating: 4.9,
-            onlineTime: '7.5hrs'
+            totalRides: 12,
+            moneySaved: 450,
+            rating: 4.8,
+            timeSaved: '45min'
         };
 
         // Update stat values
         const statValues = document.querySelectorAll('.stat-value');
-        if (statValues[0]) statValues[0].textContent = `₹${stats.todayEarnings.toLocaleString()}`;
-        if (statValues[1]) statValues[1].textContent = stats.ridesCompleted;
+        if (statValues[0]) statValues[0].textContent = stats.totalRides;
+        if (statValues[1]) statValues[1].textContent = `₹${stats.moneySaved}`;
         if (statValues[2]) statValues[2].textContent = stats.rating;
-        if (statValues[3]) statValues[3].textContent = stats.onlineTime;
+        if (statValues[3]) statValues[3].textContent = stats.timeSaved;
     }
 
     loadRecentActivity() {
@@ -278,30 +233,30 @@ class CaptainDashboard {
             {
                 type: 'completed',
                 title: 'Ride Completed',
-                description: 'Picked up John from MBU to Railway Station - ₹180',
-                time: '30 min ago',
+                description: 'MBU Campus to Tirupati Railway Station - ₹180',
+                time: '2 hours ago',
                 icon: 'fas fa-check'
             },
             {
-                type: 'started',
-                title: 'Ride Started',
-                description: 'En route to pick up Sarah from Hostel Block A',
-                time: '1 hour ago',
-                icon: 'fas fa-car'
+                type: 'recharged',
+                title: 'Wallet Recharged',
+                description: 'Added ₹500 to your wallet',
+                time: 'Yesterday',
+                icon: 'fas fa-plus'
             },
             {
                 type: 'rating',
                 title: 'Rating Received',
-                description: 'Student rated you 5 stars with positive feedback',
-                time: '2 hours ago',
+                description: 'Captain rated you 5 stars',
+                time: '2 days ago',
                 icon: 'fas fa-star'
             },
             {
-                type: 'payment',
-                title: 'Payment Received',
-                description: '₹150 credited to your wallet',
-                time: '3 hours ago',
-                icon: 'fas fa-money-bill-wave'
+                type: 'scheduled',
+                title: 'Ride Scheduled',
+                description: 'Tomorrow 9:00 AM to Airport',
+                time: '3 days ago',
+                icon: 'fas fa-calendar'
             }
         ];
 
@@ -326,9 +281,9 @@ class CaptainDashboard {
     getActivityIconClass(type) {
         const iconClasses = {
             'completed': 'success',
-            'started': 'primary',
+            'recharged': 'primary',
             'rating': 'info',
-            'payment': 'warning'
+            'scheduled': 'warning'
         };
         return iconClasses[type] || 'info';
     }
@@ -339,24 +294,6 @@ class CaptainDashboard {
         notificationBadges.forEach(badge => {
             badge.textContent = '3';
         });
-    }
-
-    goOnline() {
-        this.isOnline = true;
-        this.toggleStatus();
-        this.showNotification('Welcome back! You are now online and ready to accept rides.', 'success');
-    }
-
-    startKYC() {
-        this.showNotification('KYC verification process will be implemented soon!', 'info');
-        // TODO: Implement KYC flow
-        console.log('Starting KYC process...');
-    }
-
-    viewKYCStatus() {
-        this.showNotification('KYC status: Pending verification', 'warning');
-        // TODO: Show KYC status modal
-        console.log('Viewing KYC status...');
     }
 
     logout() {
@@ -430,35 +367,31 @@ class CaptainDashboard {
 }
 
 // Global functions for onclick handlers
-function viewRideRequests() {
-    console.log('Viewing ride requests...');
-    // TODO: Implement ride requests view
+function bookRide() {
+    console.log('Booking new ride...');
+    // TODO: Implement ride booking
+    alert('Book Ride feature - Coming Soon!\nThis will open the ride booking interface.');
 }
 
-function manageActiveRides() {
-    console.log('Managing active rides...');
-    // TODO: Implement active rides management
+function trackRide() {
+    console.log('Tracking current ride...');
+    // TODO: Implement ride tracking
+    alert('Track Ride feature - Coming Soon!\nThis will show real-time ride tracking.');
 }
 
-function viewEarnings() {
-    console.log('Viewing earnings...');
-    // TODO: Implement earnings view
+function viewHistory() {
+    console.log('Viewing ride history...');
+    // TODO: Implement ride history
+    alert('Ride History feature - Coming Soon!\nThis will display your past rides.');
 }
 
-function updateProfile() {
-    console.log('Updating profile...');
-    // TODO: Implement profile update
-}
-
-function startKYC() {
-    // This will be handled by the CaptainDashboard class
-}
-
-function viewKYCStatus() {
-    // This will be handled by the CaptainDashboard class
+function manageWallet() {
+    console.log('Managing wallet...');
+    // TODO: Implement wallet management
+    alert('Wallet Management feature - Coming Soon!\nThis will open wallet interface.');
 }
 
 // Initialize dashboard when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    new CaptainDashboard();
+    new StudentDashboard();
 });

@@ -1,4 +1,4 @@
-/* Velora Captain Dashboard - Modern Mobile-First Design */
+/* Velora Student Dashboard - Modern Mobile-First Design */
 
 /* ========================================
    GLOBAL STYLES
@@ -169,50 +169,6 @@ body {
     display: flex;
     align-items: center;
     gap: 20px;
-}
-
-.status-toggle {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.status-label {
-    font-size: 14px;
-    color: var(--text-secondary);
-}
-
-.status-btn {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--highlight-accent);
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.status-btn.offline {
-    background: var(--text-secondary);
-}
-
-.status-dot {
-    width: 8px;
-    height: 8px;
-    background: white;
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.5; }
-    100% { opacity: 1; }
 }
 
 .theme-toggle,
@@ -543,9 +499,6 @@ body {
 .welcome-content {
     position: relative;
     z-index: 1;
-}
-
-.welcome-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -681,10 +634,10 @@ body {
 }
 
 .stat-card:nth-child(1) .stat-icon { 
-    background: linear-gradient(135deg, var(--highlight-accent), #00E676); 
+    background: linear-gradient(135deg, var(--primary-base), #7C4DFF); 
 }
 .stat-card:nth-child(2) .stat-icon { 
-    background: linear-gradient(135deg, var(--primary-base), #7C4DFF); 
+    background: linear-gradient(135deg, var(--highlight-accent), #00E676); 
 }
 .stat-card:nth-child(3) .stat-icon { 
     background: linear-gradient(135deg, #FFA500, #FFB74D); 
@@ -827,109 +780,6 @@ body {
     font-size: 13px;
     color: var(--text-secondary);
     font-weight: 500;
-}
-
-.action-badge {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    background: var(--alert-warning);
-    color: white;
-    font-size: 10px;
-    font-weight: 600;
-    padding: 4px 8px;
-    border-radius: 10px;
-    min-width: 20px;
-    text-align: center;
-}
-
-/* ========================================
-   KYC SECTION
-======================================== */
-
-.kyc-section {
-    margin-bottom: 40px;
-}
-
-.kyc-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 24px;
-    position: relative;
-    overflow: hidden;
-}
-
-.kyc-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #FFA500, #FFB74D);
-    opacity: 1;
-}
-
-.kyc-header {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    margin-bottom: 20px;
-    position: relative;
-    z-index: 1;
-}
-
-.kyc-icon {
-    width: 52px;
-    height: 52px;
-    background: linear-gradient(135deg, #FFA500, #FFB74D);
-    color: white;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    box-shadow: 0 4px 16px rgba(255, 165, 0, 0.3);
-}
-
-.kyc-content h3 {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 6px;
-}
-
-.kyc-content p {
-    font-size: 13px;
-    color: var(--text-secondary);
-    font-weight: 500;
-}
-
-.kyc-status {
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-    margin-left: auto;
-}
-
-.kyc-status.pending {
-    background: rgba(255, 165, 0, 0.1);
-    color: #FFA500;
-}
-
-.kyc-actions {
-    display: flex;
-    gap: 16px;
-    position: relative;
-    z-index: 1;
-}
-
-.kyc-actions .btn {
-    flex: 1;
-    justify-content: center;
-    font-weight: 600;
 }
 
 /* ========================================
