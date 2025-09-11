@@ -15,6 +15,7 @@ class AdminDashboard {
             this.initializeDashboard();
             this.setupEventListeners();
             this.loadDashboardData();
+            this.loadKYCApplications();
             
             console.log('✅ Admin Dashboard initialized successfully');
         } catch (error) {
@@ -451,9 +452,201 @@ class AdminDashboard {
     loadSecurity() {
         console.log('Loading security...');
     }
+
+    // KYC Management Functions
+    async loadKYCApplications() {
+        try {
+            console.log('Loading KYC applications...');
+            const response = await fetch('/api/kyc/pending', {
+                method: 'GET',
+                credentials: 'include'
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to load KYC applications');
+            }
+
+            const data = await response.json();
+            console.log('KYC applications loaded:', data);
+
+            if (data.success) {
+                this.displayKYCApplications(data.applications);
+                this.updateKYCStats(data.applications);
+            }
+        } catch (error) {
+            console.error('Error loading KYC applications:', error);
+            this.showNotification('Failed to load KYC applications', 'error');
+        }
+    }
+
+    displayKYCApplications(applications) {
+        const tbody = document.getElementById('kycTableBody');
+        if (!tbody) return;
+
+        tbody.innerHTML = '';
+
+        if (applications.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="6" class="text-center">
+                        <i class="fas fa-inbox"></i>
+                        <p>No KYC applications found</p>
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        applications.forEach(app => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>
+                    <div class="user-info">
+                        <div class="user-avatar">${app.full_name.charAt(0)}</div>
+                        <div class="user-details">
+                            <strong>${app.full_name}</strong>
+                            <small>${app.username}</small>
+                        </div>
+                    </div>
+                </td>
+                <td>${app.email}</td>
+                <td>${app.mobile_number}</td>
+                <td>${new Date(app.submitted_at).toLocaleDateString()}</td>
+                <td>
+                    <span class="status-badge status-${app.kyc_status}">
+                        ${app.kyc_status.charAt(0).toUpperCase() + app.kyc_status.slice(1)}
+                    </span>
+                </td>
+                <td>
+                    <div class="action-buttons">
+                        <button class="btn btn-sm btn-primary" onclick="viewKYCApplication(${app.user_id})">
+                            <i class="fas fa-eye"></i>
+                            View
+                        </button>
+                        <button class="btn btn-sm btn-success" onclick="approveKYC(${app.user_id})" ${app.kyc_status !== 'submitted' ? 'disabled' : ''}>
+                            <i class="fas fa-check"></i>
+                            Approve
+                        </button>
+                        <button class="btn btn-sm btn-danger" onclick="rejectKYC(${app.user_id})" ${app.kyc_status !== 'submitted' ? 'disabled' : ''}>
+                            <i class="fas fa-times"></i>
+                            Reject
+                        </button>
+                    </div>
+                </td>
+            `;
+            tbody.appendChild(row);
+        });
+    }
+
+    updateKYCStats(applications) {
+        const pending = applications.filter(app => app.kyc_status === 'submitted').length;
+        const approved = applications.filter(app => app.kyc_status === 'approved').length;
+        const rejected = applications.filter(app => app.kyc_status === 'rejected').length;
+
+        document.getElementById('kycPendingStats').textContent = pending;
+        document.getElementById('kycApprovedStats').textContent = approved;
+        document.getElementById('kycRejectedStats').textContent = rejected;
+        document.getElementById('kycPendingCount').textContent = pending;
+    }
+
+    async approveKYC(userId) {
+        if (!confirm('Are you sure you want to approve this KYC application?')) {
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/kyc/review', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    userId: userId,
+                    status: 'approved'
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                this.showNotification('KYC application approved successfully', 'success');
+                this.loadKYCApplications();
+            } else {
+                this.showNotification(data.message || 'Failed to approve KYC', 'error');
+            }
+        } catch (error) {
+            console.error('Error approving KYC:', error);
+            this.showNotification('Failed to approve KYC application', 'error');
+        }
+    }
+
+    async rejectKYC(userId) {
+        const reason = prompt('Please provide a reason for rejection:');
+        if (!reason) return;
+
+        try {
+            const response = await fetch('/api/kyc/review', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    userId: userId,
+                    status: 'rejected',
+                    rejectionReason: reason
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                this.showNotification('KYC application rejected', 'success');
+                this.loadKYCApplications();
+            } else {
+                this.showNotification(data.message || 'Failed to reject KYC', 'error');
+            }
+        } catch (error) {
+            console.error('Error rejecting KYC:', error);
+            this.showNotification('Failed to reject KYC application', 'error');
+        }
+    }
+
+    viewKYCApplication(userId) {
+        // Open KYC application details in a modal or new page
+        console.log('Viewing KYC application for user:', userId);
+        // TODO: Implement KYC application viewer modal
+        alert('KYC Application Viewer - Coming Soon!');
+    }
+}
+
+// Global functions for HTML onclick handlers
+function refreshKYCApplications() {
+    if (window.adminDashboard) {
+        window.adminDashboard.loadKYCApplications();
+    }
+}
+
+function approveKYC(userId) {
+    if (window.adminDashboard) {
+        window.adminDashboard.approveKYC(userId);
+    }
+}
+
+function rejectKYC(userId) {
+    if (window.adminDashboard) {
+        window.adminDashboard.rejectKYC(userId);
+    }
+}
+
+function viewKYCApplication(userId) {
+    if (window.adminDashboard) {
+        window.adminDashboard.viewKYCApplication(userId);
+    }
 }
 
 // Initialize dashboard when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    new AdminDashboard();
+    window.adminDashboard = new AdminDashboard();
 });

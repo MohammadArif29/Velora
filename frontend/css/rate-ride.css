@@ -1,0 +1,662 @@
+/* Velora Rate Ride - Modern Mobile-First Design */
+
+/* ========================================
+   GLOBAL STYLES
+======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* ========================================
+   HEADERS
+======================================== */
+
+.mobile-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    z-index: 1000;
+    display: block;
+}
+
+.desktop-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    z-index: 1000;
+    display: none;
+}
+
+.mobile-header-content,
+.desktop-header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding: 0 16px;
+}
+
+.desktop-header-content {
+    padding: 0 24px;
+}
+
+.mobile-header-left,
+.desktop-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 18px;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+    background: var(--bg-primary);
+}
+
+.mobile-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary-base);
+}
+
+.page-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.mobile-header-right,
+.desktop-header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.theme-toggle-mobile,
+.theme-toggle {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 16px;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle-mobile:hover,
+.theme-toggle:hover {
+    background: var(--bg-primary);
+}
+
+/* ========================================
+   MAIN CONTENT
+======================================== */
+
+.main-content {
+    margin-top: 60px;
+    padding: 24px 16px;
+    min-height: calc(100vh - 60px);
+    background: var(--bg-primary);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* ========================================
+   RIDE SUMMARY CARD
+======================================== */
+
+.ride-summary-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.ride-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.ride-header h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.ride-id {
+    font-size: 14px;
+    color: var(--text-secondary);
+    background: var(--bg-primary);
+    padding: 4px 12px;
+    border-radius: 12px;
+}
+
+.captain-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.captain-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.captain-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.captain-details {
+    flex: 1;
+}
+
+.captain-details h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.captain-details p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.ride-route {
+    font-size: 12px;
+    color: var(--text-secondary);
+    background: var(--bg-primary);
+    padding: 4px 8px;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+.ride-details {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+.detail-item {
+    text-align: center;
+}
+
+.detail-item .label {
+    display: block;
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+}
+
+.detail-item .value {
+    display: block;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* ========================================
+   RATING SECTION
+======================================== */
+
+.rating-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px 24px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.rating-section h3 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.rating-section p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+}
+
+.rating-stars {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.stars-container {
+    display: flex;
+    gap: 8px;
+    font-size: 48px;
+    cursor: pointer;
+}
+
+.stars-container i {
+    color: var(--border);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.stars-container i:hover,
+.stars-container i.active {
+    color: #FFA500;
+    transform: scale(1.1);
+}
+
+.rating-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    min-height: 24px;
+}
+
+/* ========================================
+   RATING CATEGORIES
+======================================== */
+
+.rating-categories {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.rating-categories h4 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+}
+
+.category-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.category-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    background: var(--bg-primary);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.category-item:hover {
+    background: var(--surface);
+    transform: translateX(4px);
+}
+
+.category-info {
+    flex: 1;
+}
+
+.category-name {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.category-desc {
+    display: block;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.category-stars {
+    display: flex;
+    gap: 4px;
+    font-size: 20px;
+}
+
+.category-stars i {
+    color: var(--border);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.category-stars i:hover,
+.category-stars i.active {
+    color: #FFA500;
+    transform: scale(1.1);
+}
+
+/* ========================================
+   REVIEW SECTION
+======================================== */
+
+.review-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.review-section h4 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+}
+
+.review-section textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 16px;
+    background: var(--bg-primary);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    color: var(--text-primary);
+    font-size: 14px;
+    font-family: inherit;
+    resize: vertical;
+    transition: all 0.3s ease;
+}
+
+.review-section textarea:focus {
+    outline: none;
+    border-color: var(--primary-base);
+}
+
+.char-count {
+    text-align: right;
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+}
+
+/* ========================================
+   QUICK FEEDBACK
+======================================== */
+
+.quick-feedback {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.quick-feedback h4 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+}
+
+.feedback-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.feedback-tag {
+    padding: 8px 16px;
+    background: var(--bg-primary);
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.feedback-tag:hover {
+    border-color: var(--primary-base);
+    background: var(--primary-base);
+    color: white;
+}
+
+.feedback-tag.selected {
+    border-color: var(--primary-base);
+    background: var(--primary-base);
+    color: white;
+}
+
+/* ========================================
+   SUBMIT SECTION
+======================================== */
+
+.submit-section {
+    margin-top: auto;
+    padding-top: 24px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px 32px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-family: inherit;
+    width: 100%;
+}
+
+.btn-primary {
+    background: var(--primary-base);
+    color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: var(--secondary-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(90, 49, 244, 0.3);
+}
+
+.btn-primary:disabled {
+    background: var(--border);
+    color: var(--text-secondary);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* ========================================
+   MODALS
+======================================== */
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: var(--surface);
+    border-radius: 20px;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.modal-body {
+    padding: 40px 24px;
+}
+
+.thank-you-content {
+    text-align: center;
+}
+
+.thank-you-icon {
+    font-size: 64px;
+    color: var(--highlight-accent);
+    margin-bottom: 20px;
+}
+
+.thank-you-content h3 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+}
+
+.thank-you-content p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+======================================== */
+
+@media (min-width: 768px) {
+    .mobile-header {
+        display: none;
+    }
+    
+    .desktop-header {
+        display: block;
+    }
+    
+    .main-content {
+        margin-top: 70px;
+        padding: 40px;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .ride-details {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .feedback-tags {
+        justify-content: center;
+    }
+    
+    .btn {
+        max-width: 300px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .main-content {
+        padding: 60px;
+    }
+}
+
+/* ========================================
+   ANIMATIONS
+======================================== */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.ride-summary-card,
+.rating-section,
+.rating-categories,
+.review-section,
+.quick-feedback {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.ride-summary-card { animation-delay: 0.1s; }
+.rating-section { animation-delay: 0.2s; }
+.rating-categories { animation-delay: 0.3s; }
+.review-section { animation-delay: 0.4s; }
+.quick-feedback { animation-delay: 0.5s; }
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.stars-container i:hover {
+    animation: pulse 0.6s ease-in-out;
+}
+
+/* ========================================
+   RATING TEXT VARIATIONS
+======================================== */
+
+.rating-text.excellent { color: var(--highlight-accent); }
+.rating-text.good { color: #4CAF50; }
+.rating-text.average { color: #FF9800; }
+.rating-text.poor { color: var(--alert-warning); }
+.rating-text.bad { color: #F44336; }

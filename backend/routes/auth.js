@@ -221,10 +221,24 @@ router.post('/login', async (req, res) => {
             });
         }
 
+        // Generate JWT token
+        const jwt = require('jsonwebtoken');
+        const token = jwt.sign(
+            { 
+                userId: user.id, 
+                username: user.username, 
+                userType: user.user_type,
+                role: user.user_type 
+            },
+            process.env.JWT_SECRET || 'velora_jwt_secret',
+            { expiresIn: '24h' }
+        );
+
         // Success response (without sensitive data)
         res.json({
             success: true,
             message: 'Login successful',
+            token: token,
             user: {
                 id: user.id,
                 uniqueId: user.unique_id,
@@ -309,6 +323,94 @@ router.post('/check-availability', async (req, res) => {
         res.status(500).json({
             success: false,
             message: 'Failed to check availability'
+        });
+    }
+});
+
+// Verify token endpoint
+router.get('/verify', async (req, res) => {
+    try {
+        const authHeader = req.headers.authorization;
+        
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            return res.status(401).json({
+                success: false,
+                message: 'Access denied. No token provided.'
+            });
+        }
+
+        const token = authHeader.substring(7);
+        
+        if (!token) {
+            return res.status(401).json({
+                success: false,
+                message: 'Access denied. No token provided.'
+            });
+        }
+
+        // Verify token
+        const jwt = require('jsonwebtoken');
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'velora_jwt_secret');
+        
+        // Get user details
+        const user = await userModel.getUserById(decoded.userId);
+        
+        if (!user) {
+            return res.status(401).json({
+                success: false,
+                message: 'User not found.'
+            });
+        }
+
+        res.json({
+            success: true,
+            user: {
+                id: user.id,
+                username: user.username,
+                email: user.email,
+                userType: user.user_type,
+                fullName: user.full_name
+            }
+        });
+
+    } catch (error) {
+        console.error('Token verification error:', error);
+        
+        if (error.name === 'JsonWebTokenError') {
+            return res.status(401).json({
+                success: false,
+                message: 'Invalid token.'
+            });
+        }
+        
+        if (error.name === 'TokenExpiredError') {
+            return res.status(401).json({
+                success: false,
+                message: 'Token expired.'
+            });
+        }
+        
+        return res.status(500).json({
+            success: false,
+            message: 'Internal server error.'
+        });
+    }
+});
+
+// Logout endpoint
+router.post('/logout', (req, res) => {
+    try {
+        // In a real app, you might want to blacklist the token
+        // For now, we'll just return success
+        res.json({
+            success: true,
+            message: 'Logged out successfully'
+        });
+    } catch (error) {
+        console.error('Logout error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Internal server error'
         });
     }
 });

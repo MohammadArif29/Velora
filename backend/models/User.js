@@ -196,6 +196,20 @@ class User {
         }
     }
 
+    // Get user by ID
+    async getUserById(userId) {
+        try {
+            const [rows] = await this.pool.execute(`
+                SELECT * FROM users WHERE id = ? AND is_active = true
+            `, [userId]);
+            
+            return rows[0] || null;
+        } catch (error) {
+            console.error('Error getting user by ID:', error);
+            throw error;
+        }
+    }
+
     // Verify password
     async verifyPassword(plainPassword, hashedPassword) {
         try {
@@ -225,9 +239,262 @@ class User {
         }
     }
 
+    // KYC Methods - Simplified
+    async getKYCData(userId) {
+        try {
+            const [kycData] = await this.pool.execute(`
+                SELECT 
+                    cd.*,
+                    u.full_name as user_full_name,
+                    u.email as user_email,
+                    u.mobile_number as user_mobile
+                FROM captain_details cd
+                LEFT JOIN users u ON cd.user_id = u.id
+                WHERE cd.user_id = ?
+            `, [userId]);
+
+            if (kycData.length === 0) {
+                return {
+                    status: 'pending',
+                    captainDetails: {},
+                    documents: []
+                };
+            }
+
+            const data = kycData[0];
+            return {
+                status: data.kyc_status || 'pending',
+                captainDetails: data,
+                documents: [
+                    {
+                        type: 'id_document',
+                        name: data.id_document_name,
+                        path: data.id_document_path
+                    },
+                    {
+                        type: 'license_document',
+                        name: data.license_document_name,
+                        path: data.license_document_path
+                    }
+                ].filter(doc => doc.name)
+            };
+        } catch (error) {
+            console.error('Error getting KYC data:', error);
+            throw error;
+        }
+    }
+
+    async saveKYCStep(userId, step, stepData) {
+        try {
+            // Validate step data based on step number
+            const validation = this.validateKYCStep(step, stepData);
+            if (!validation.valid) {
+                return { success: false, message: validation.message };
+            }
+
+            // Start transaction
+            await this.pool.execute('START TRANSACTION');
+
+            try {
+                // Update captain_details table for relevant steps
+                if (step === 3) { // Driving License
+                    await this.pool.execute(`
+                        INSERT INTO captain_details (user_id, license_number, license_expiry, license_type)
+                        VALUES (?, ?, ?, ?)
+                        ON DUPLICATE KEY UPDATE
+                        license_number = VALUES(license_number),
+                        license_expiry = VALUES(license_expiry),
+                        license_type = VALUES(license_type),
+                        updated_at = CURRENT_TIMESTAMP
+                    `, [userId, stepData.licenseNumber, stepData.licenseExpiry, stepData.licenseType]);
+                }
+
+                // Save document data
+                await this.pool.execute(`
+                    INSERT INTO kyc_documents (user_id, step, data, document_path, document_name)
+                    VALUES (?, ?, ?, ?, ?)
+                    ON DUPLICATE KEY UPDATE
+                    data = VALUES(data),
+                    document_path = VALUES(document_path),
+                    document_name = VALUES(document_name),
+                    submitted_at = CURRENT_TIMESTAMP
+                `, [
+                    userId, 
+                    step, 
+                    JSON.stringify(stepData), 
+                    stepData.documentPath || null,
+                    stepData.documentName || null
+                ]);
+
+                // Update KYC status
+                const newStatus = step === 8 ? 'submitted' : 'pending';
+                await this.pool.execute(`
+                    UPDATE users SET kyc_status = ? WHERE id = ?
+                `, [newStatus, userId]);
+
+                await this.pool.execute('COMMIT');
+                return { success: true };
+
+            } catch (error) {
+                await this.pool.execute('ROLLBACK');
+                throw error;
+            }
+
+        } catch (error) {
+            console.error('Error saving KYC step:', error);
+            return { success: false, message: 'Failed to save KYC step' };
+        }
+    }
+
+    validateKYCStep(step, data) {
+        switch (step) {
+            case 3: // Driving License
+                if (!data.licenseNumber || !data.licenseType || !data.licenseExpiry) {
+                    return { valid: false, message: 'License number, type, and expiry are required' };
+                }
+                if (!data.documentPath) {
+                    return { valid: false, message: 'License photo is required' };
+                }
+                break;
+            case 4: // Vehicle Registration
+                if (!data.vehicleNumber || !data.rcNumber) {
+                    return { valid: false, message: 'Vehicle number and RC number are required' };
+                }
+                if (!data.documentPath) {
+                    return { valid: false, message: 'RC document is required' };
+                }
+                break;
+            default:
+                if (!data.documentPath) {
+                    return { valid: false, message: 'Document upload is required' };
+                }
+        }
+        return { valid: true };
+    }
+
+    async getKYCDocuments(userId, step) {
+        try {
+            const [documents] = await this.pool.execute(`
+                SELECT step, data, document_path, document_name, submitted_at
+                FROM kyc_documents
+                WHERE user_id = ? AND step = ?
+            `, [userId, step]);
+
+            return documents;
+        } catch (error) {
+            console.error('Error getting KYC documents:', error);
+            throw error;
+        }
+    }
+
     // Close connection pool
     async close() {
         await this.pool.end();
+    }
+
+    // Submit complete KYC application - Simplified
+    async submitKYC(userId, kycData, files) {
+        try {
+            await this.pool.execute('START TRANSACTION');
+
+            try {
+                // Insert or update captain details
+                await this.pool.execute(`
+                    INSERT INTO captain_details (
+                        user_id, full_name, mobile_number, email, date_of_birth, gender, address, emergency_contact,
+                        aadhar_number, pan_number, id_document_path, id_document_name,
+                        license_number, license_type, license_expiry, license_document_path, license_document_name,
+                        kyc_status, submitted_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'submitted', NOW())
+                    ON DUPLICATE KEY UPDATE
+                        full_name = VALUES(full_name),
+                        mobile_number = VALUES(mobile_number),
+                        email = VALUES(email),
+                        date_of_birth = VALUES(date_of_birth),
+                        gender = VALUES(gender),
+                        address = VALUES(address),
+                        emergency_contact = VALUES(emergency_contact),
+                        aadhar_number = VALUES(aadhar_number),
+                        pan_number = VALUES(pan_number),
+                        id_document_path = VALUES(id_document_path),
+                        id_document_name = VALUES(id_document_name),
+                        license_number = VALUES(license_number),
+                        license_type = VALUES(license_type),
+                        license_expiry = VALUES(license_expiry),
+                        license_document_path = VALUES(license_document_path),
+                        license_document_name = VALUES(license_document_name),
+                        kyc_status = 'submitted',
+                        submitted_at = NOW(),
+                        updated_at = CURRENT_TIMESTAMP
+                `, [
+                    userId,
+                    kycData.fullName,
+                    kycData.mobileNumber,
+                    kycData.email,
+                    kycData.dateOfBirth,
+                    kycData.gender,
+                    kycData.address,
+                    kycData.emergencyContact,
+                    kycData.aadharNumber,
+                    kycData.panNumber,
+                    files.idDocument ? files.idDocument.path : null,
+                    files.idDocument ? files.idDocument.name : null,
+                    kycData.licenseNumber,
+                    kycData.licenseType,
+                    kycData.licenseExpiry,
+                    files.licensePhoto ? files.licensePhoto.path : null,
+                    files.licensePhoto ? files.licensePhoto.name : null
+                ]);
+
+                await this.pool.execute('COMMIT');
+                return { success: true, message: 'KYC submitted successfully' };
+
+            } catch (error) {
+                await this.pool.execute('ROLLBACK');
+                throw error;
+            }
+
+        } catch (error) {
+            console.error('Error submitting KYC:', error);
+            throw error;
+        }
+    }
+
+    // Get all pending KYC applications for admin
+    async getPendingKYCApplications() {
+        try {
+            const [applications] = await this.pool.execute(`
+                SELECT 
+                    cd.*,
+                    u.username,
+                    u.created_at as user_created_at
+                FROM captain_details cd
+                LEFT JOIN users u ON cd.user_id = u.id
+                WHERE cd.kyc_status = 'submitted'
+                ORDER BY cd.submitted_at ASC
+            `);
+            
+            return applications;
+        } catch (error) {
+            console.error('Error getting pending KYC applications:', error);
+            throw error;
+        }
+    }
+
+    // Approve or reject KYC application
+    async updateKYCStatus(userId, status, reviewedBy, rejectionReason = null) {
+        try {
+            await this.pool.execute(`
+                UPDATE captain_details 
+                SET kyc_status = ?, reviewed_at = NOW(), reviewed_by = ?, rejection_reason = ?
+                WHERE user_id = ?
+            `, [status, reviewedBy, rejectionReason, userId]);
+
+            return { success: true, message: `KYC ${status} successfully` };
+        } catch (error) {
+            console.error('Error updating KYC status:', error);
+            throw error;
+        }
     }
 }
 

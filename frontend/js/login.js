@@ -200,8 +200,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const result = await response.json();
             
             if (response.ok) {
-                // Save user data
+                // Save user data and token
                 localStorage.setItem('velora_user', JSON.stringify(result.user));
+                localStorage.setItem('token', result.token);
+                localStorage.setItem('userId', result.user.id);
                 
                 // Save credentials if "Remember me" is checked
                 if (formData.rememberMe) {

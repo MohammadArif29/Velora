@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Notifications - Velora</title>
+    
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="../css/themes.css">
+    <link id="theme-css" rel="stylesheet" href="../css/dark-theme.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Notifications CSS -->
+    <link rel="stylesheet" href="../css/notifications.css">
+</head>
+<body>
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+        <div class="mobile-header-content">
+            <div class="mobile-header-left">
+                <button class="back-btn" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="mobile-logo">
+                    <i class="fas fa-bell"></i>
+                    <span>Notifications</span>
+                </div>
+            </div>
+            <div class="mobile-header-right">
+                <button class="theme-toggle-mobile" id="themeToggleMobile">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="mark-all-read-btn" onclick="markAllAsRead()">
+                    <i class="fas fa-check-double"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Desktop Header -->
+    <header class="desktop-header">
+        <div class="desktop-header-content">
+            <div class="desktop-header-left">
+                <button class="back-btn" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h1 class="page-title">Notifications</h1>
+            </div>
+            <div class="desktop-header-right">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="mark-all-read-btn" onclick="markAllAsRead()">
+                    <i class="fas fa-check-double"></i>
+                    Mark All Read
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Notification Filters -->
+        <div class="notification-filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="unread">Unread</button>
+            <button class="filter-btn" data-filter="ride_update">Ride Updates</button>
+            <button class="filter-btn" data-filter="payment">Payments</button>
+            <button class="filter-btn" data-filter="promotion">Promotions</button>
+        </div>
+
+        <!-- Notifications List -->
+        <div class="notifications-container">
+            <div class="notifications-list" id="notificationsList">
+                <!-- Notifications will be populated here -->
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <i class="fas fa-bell-slash"></i>
+                <h3>No Notifications</h3>
+                <p>You're all caught up! New notifications will appear here.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Notification Details Modal -->
+    <div class="modal" id="notificationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Notification Details</h3>
+                <button class="modal-close" onclick="closeNotificationModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="notification-details" id="notificationDetails">
+                    <!-- Notification details will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/themes.js"></script>
+    <script src="../js/notification-service.js"></script>
+    <script src="../js/notifications.js"></script>
+</body>
+</html>

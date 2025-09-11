@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>KYC Verification - Velora</title>
+    
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="../css/themes.css">
+    <link id="theme-css" rel="stylesheet" href="../css/dark-theme.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- KYC CSS -->
+    <link rel="stylesheet" href="../css/captain-kyc.css">
+</head>
+<body>
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+        <div class="mobile-header-content">
+            <div class="mobile-header-left">
+                <button class="back-btn" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="mobile-logo">
+                    <i class="fas fa-id-card"></i>
+                    <span>KYC Verification</span>
+                </div>
+            </div>
+            <div class="mobile-header-right">
+                <button class="theme-toggle-mobile" id="themeToggleMobile">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Desktop Header -->
+    <header class="desktop-header">
+        <div class="desktop-header-content">
+            <div class="desktop-header-left">
+                <button class="back-btn" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h1 class="page-title">KYC Verification</h1>
+            </div>
+            <div class="desktop-header-right">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- KYC Status Card -->
+        <div class="kyc-status-card">
+            <div class="status-header">
+                <div class="status-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="status-info">
+                    <h3>KYC Verification Status</h3>
+                    <p>Complete your verification to start accepting rides</p>
+                </div>
+                <div class="status-badge" id="kycStatusBadge">
+                    <span>Pending</span>
+                </div>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="kycProgress" style="width: 25%"></div>
+            </div>
+            <div class="progress-text">
+                <span>1 of 4 steps completed</span>
+            </div>
+        </div>
+
+        <!-- KYC Steps -->
+        <div class="kyc-steps">
+            <div class="step-item current" data-step="1">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>Personal Information</h4>
+                    <p>Basic details and contact information</p>
+                </div>
+                <div class="step-status">
+                    <i class="fas fa-clock"></i>
+                </div>
+            </div>
+
+            <div class="step-item" data-step="2">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>Identity Verification</h4>
+                    <p>Upload government-issued ID</p>
+                </div>
+                <div class="step-status">
+                    <i class="fas fa-lock"></i>
+                </div>
+            </div>
+
+            <div class="step-item" data-step="3">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h4>Driving License</h4>
+                    <p>Upload valid driving license</p>
+                </div>
+                <div class="step-status">
+                    <i class="fas fa-lock"></i>
+                </div>
+            </div>
+
+            <div class="step-item" data-step="4">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h4>Final Review</h4>
+                    <p>Wait for admin approval</p>
+                </div>
+                <div class="step-status">
+                    <i class="fas fa-lock"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Current Step Form -->
+        <div class="current-step-form" id="currentStepForm">
+            <div class="form-header">
+                <h3 id="formTitle">Personal Information</h3>
+                <p id="formDescription">Please provide your basic details and contact information</p>
+            </div>
+
+            <form class="kyc-form" id="kycForm">
+                <!-- Step 1: Personal Information -->
+                <div class="step-content" id="step1Content">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" placeholder="Enter your full name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mobileNumber">Mobile Number</label>
+                        <input type="tel" id="mobileNumber" placeholder="Enter your mobile number" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" placeholder="Enter your email address" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dateOfBirth">Date of Birth</label>
+                        <input type="date" id="dateOfBirth" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender" required>
+                            <option value="">Select gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <textarea id="address" placeholder="Enter your complete address" rows="3" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="emergencyContact">Emergency Contact</label>
+                        <input type="tel" id="emergencyContact" placeholder="Enter emergency contact number" required>
+                    </div>
+                </div>
+
+                <!-- Step 2: Identity Verification -->
+                <div class="step-content" id="step2Content" style="display: none;">
+                    <div class="form-group">
+                        <label for="aadharNumber">Aadhar Number</label>
+                        <input type="text" id="aadharNumber" placeholder="Enter your Aadhar number" maxlength="12" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="panNumber">PAN Number</label>
+                        <input type="text" id="panNumber" placeholder="Enter your PAN number" maxlength="10" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="idDocument">ID Document Photo</label>
+                        <div class="file-upload-area" id="idDocumentUpload">
+                            <div class="upload-content">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Click to upload or drag and drop</p>
+                                <span>PNG, JPG up to 10MB</span>
+                            </div>
+                            <input type="file" id="idDocument" accept="image/*" hidden>
+                        </div>
+                        <div class="uploaded-file" id="uploadedIdFile" style="display: none;">
+                            <i class="fas fa-file-image"></i>
+                            <span class="file-name"></span>
+                            <button type="button" class="remove-file" onclick="removeFile('idDocument')">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Driving License -->
+                <div class="step-content" id="step3Content" style="display: none;">
+                    <div class="form-group">
+                        <label for="licenseNumber">License Number</label>
+                        <input type="text" id="licenseNumber" placeholder="Enter your driving license number" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="licenseType">License Type</label>
+                        <select id="licenseType" required>
+                            <option value="">Select license type</option>
+                            <option value="LMV">LMV (Light Motor Vehicle)</option>
+                            <option value="MCWG">MCWG (Motor Cycle Without Gear)</option>
+                            <option value="MCWOG">MCWOG (Motor Cycle With Gear)</option>
+                            <option value="HMV">HMV (Heavy Motor Vehicle)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="licenseExpiry">Expiry Date</label>
+                        <input type="date" id="licenseExpiry" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="licensePhoto">License Photo</label>
+                        <div class="file-upload-area" id="licensePhotoUpload">
+                            <div class="upload-content">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Click to upload or drag and drop</p>
+                                <span>PNG, JPG up to 10MB</span>
+                            </div>
+                            <input type="file" id="licensePhoto" accept="image/*" hidden>
+                        </div>
+                        <div class="uploaded-file" id="uploadedLicenseFile" style="display: none;">
+                            <i class="fas fa-file-image"></i>
+                            <span class="file-name"></span>
+                            <button type="button" class="remove-file" onclick="removeFile('licensePhoto')">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Final Review -->
+                <div class="step-content" id="step4Content" style="display: none;">
+                    <div class="review-summary">
+                        <h4>Review Your Information</h4>
+                        <p>Please review all the information you've provided before submitting for admin approval.</p>
+                        
+                        <div class="review-section">
+                            <h5>Personal Information</h5>
+                            <div id="reviewPersonalInfo"></div>
+                        </div>
+                        
+                        <div class="review-section">
+                            <h5>Identity Documents</h5>
+                            <div id="reviewIdentityInfo"></div>
+                        </div>
+                        
+                        <div class="review-section">
+                            <h5>Driving License</h5>
+                            <div id="reviewLicenseInfo"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" id="prevBtn" onclick="previousStep()" style="display: none;">
+                        <i class="fas fa-arrow-left"></i>
+                        Previous
+                    </button>
+                    <button type="button" class="btn btn-outline" onclick="saveDraft()">
+                        <i class="fas fa-save"></i>
+                        Save Draft
+                    </button>
+                    <button type="submit" class="btn btn-primary" id="nextBtn">
+                        <i class="fas fa-arrow-right"></i>
+                        <span id="nextBtnText">Continue</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Help Section -->
+        <div class="help-section">
+            <h4>Need Help?</h4>
+            <div class="help-options">
+                <button class="help-option" onclick="showHelp('requirements')">
+                    <i class="fas fa-list"></i>
+                    <span>Document Requirements</span>
+                </button>
+                <button class="help-option" onclick="showHelp('contact')">
+                    <i class="fas fa-phone"></i>
+                    <span>Contact Support</span>
+                </button>
+                <button class="help-option" onclick="showHelp('faq')">
+                    <i class="fas fa-question-circle"></i>
+                    <span>FAQ</span>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Help Modal -->
+    <div class="modal" id="helpModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="helpModalTitle">Help</h3>
+                <button class="modal-close" onclick="closeHelpModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="help-content" id="helpContent">
+                    <!-- Help content will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/themes.js"></script>
+    <script src="../js/captain-kyc.js"></script>
+</body>
+</html>

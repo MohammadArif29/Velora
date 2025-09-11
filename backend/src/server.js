@@ -15,6 +15,9 @@ const PORT = process.env.PORT || 3000;
 const authRoutes = require('../routes/auth');
 const passwordResetRoutes = require('../routes/passwordReset');
 const adminRoutes = require('../routes/admin');
+const kycRoutes = require('../routes/kyc');
+const rideRoutes = require('../routes/rides');
+const paymentRoutes = require('../routes/payments');
 
 // Middleware
 app.use(cors());
@@ -40,6 +43,9 @@ app.use((req, res, next) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/password', passwordResetRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/kyc', kycRoutes);
+app.use('/api', rideRoutes);
+app.use('/api', paymentRoutes);
 
 // Basic API route
 app.get('/api', (req, res) => {

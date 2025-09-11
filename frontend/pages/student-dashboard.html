@@ -23,19 +23,19 @@
     <header class="mobile-header">
         <div class="mobile-header-content">
             <div class="mobile-header-left">
-                <button class="mobile-menu-btn" id="mobileMenuBtn">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <div class="mobile-logo">
-                    <i class="fas fa-graduation-cap"></i>
-                    <span>Velora</span>
+                <div class="location-info">
+                    <div class="location-label">Current Location</div>
+                    <div class="location-text">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>MBU Campus</span>
+                    </div>
                 </div>
             </div>
             <div class="mobile-header-right">
                 <button class="theme-toggle-mobile" id="themeToggleMobile">
                     <i class="fas fa-moon"></i>
                 </button>
-                <button class="notifications-btn-mobile" id="notificationsBtn">
+                <button class="notifications-btn-mobile" id="notificationsBtn" onclick="viewNotifications()">
                     <i class="fas fa-bell"></i>
                     <span class="notification-badge">3</span>
                 </button>
@@ -47,11 +47,44 @@
     <header class="desktop-header">
         <div class="desktop-header-content">
             <div class="desktop-header-left">
-                <button class="sidebar-toggle" id="sidebarToggle">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <h1 class="page-title">Student Dashboard</h1>
+                <div class="desktop-logo">
+                    <i class="fas fa-car"></i>
+                    Velora
+                </div>
             </div>
+            
+            <!-- Top Navigation Bar -->
+            <nav class="top-navbar">
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="ride-booking.html" class="nav-item">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Book Ride</span>
+                </a>
+                <a href="#" class="nav-item" onclick="trackRide()">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Track Ride</span>
+                </a>
+                <a href="ride-history.html" class="nav-item">
+                    <i class="fas fa-history"></i>
+                    <span>History</span>
+                </a>
+                <a href="wallet.html" class="nav-item">
+                    <i class="fas fa-wallet"></i>
+                    <span>Wallet</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-star"></i>
+                    <span>Ratings</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </nav>
+            
             <div class="desktop-header-right">
                 <button class="theme-toggle" id="themeToggle">
                     <i class="fas fa-moon"></i>
@@ -67,6 +100,9 @@
                         <p id="userType">Student</p>
                     </div>
                 </div>
+                <button class="logout-btn" id="logoutBtnDesktop" title="Logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
             </div>
         </div>
     </header>
@@ -128,76 +164,6 @@
         </div>
     </nav>
 
-    <!-- Desktop Sidebar -->
-    <aside class="desktop-sidebar" id="desktopSidebar">
-        <div class="sidebar-content">
-            <div class="sidebar-header">
-                <div class="sidebar-logo">
-                    <i class="fas fa-graduation-cap"></i>
-                </div>
-                <div class="sidebar-brand">Velora</div>
-            </div>
-            
-            <nav class="sidebar-nav">
-                <div class="nav-section">
-                    <div class="nav-section-title">Main</div>
-                    <a href="#" class="nav-item active">
-                        <i class="fas fa-home"></i>
-                        <span>Dashboard</span>
-                    </a>
-                    <a href="#" class="nav-item">
-                        <i class="fas fa-plus-circle"></i>
-                        <span>Book Ride</span>
-                    </a>
-                    <a href="#" class="nav-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Track Ride</span>
-                    </a>
-                    <a href="#" class="nav-item">
-                        <i class="fas fa-history"></i>
-                        <span>Ride History</span>
-                    </a>
-                </div>
-                
-                <div class="nav-section">
-                    <div class="nav-section-title">Account</div>
-                    <a href="#" class="nav-item">
-                        <i class="fas fa-wallet"></i>
-                        <span>Wallet</span>
-                    </a>
-                    <a href="#" class="nav-item">
-                        <i class="fas fa-star"></i>
-                        <span>Ratings</span>
-                    </a>
-                    <a href="#" class="nav-item">
-                        <i class="fas fa-user"></i>
-                        <span>Profile</span>
-                    </a>
-                    <a href="#" class="nav-item">
-                        <i class="fas fa-bell"></i>
-                        <span>Notifications</span>
-                        <span class="nav-badge">3</span>
-                    </a>
-                </div>
-                
-                <div class="nav-section">
-                    <div class="nav-section-title">Support</div>
-                    <a href="#" class="nav-item">
-                        <i class="fas fa-headset"></i>
-                        <span>Help Center</span>
-                    </a>
-                    <a href="#" class="nav-item">
-                        <i class="fas fa-shield-alt"></i>
-                        <span>Safety</span>
-                    </a>
-                    <a href="#" class="nav-item" id="logoutBtnDesktop">
-                        <i class="fas fa-sign-out-alt"></i>
-                        <span>Logout</span>
-                    </a>
-                </div>
-            </nav>
-        </div>
-    </aside>
 
     <!-- Main Content -->
     <main class="main-content" id="mainContent">
@@ -205,17 +171,49 @@
         <section class="welcome-section">
             <div class="welcome-content">
                 <div class="welcome-text">
-                    <h2>Welcome back, <span id="welcomeName">John</span>! 🎓</h2>
-                    <p>Ready for your next campus journey? Book a ride or track your current trip.</p>
-                </div>
-                <div class="welcome-actions">
-                    <button class="btn btn-primary" onclick="bookRide()">
-                        <i class="fas fa-plus"></i>
-                        Book Ride
-                    </button>
+                    <h2>Welcome back, <span id="welcomeName">John</span>! 🚗</h2>
+                    <p>Ready for your next ride? Let's get you where you need to go.</p>
                 </div>
             </div>
         </section>
+
+        <!-- Transportation Quick Actions -->
+        <div class="transport-actions">
+            <h3>Quick Actions</h3>
+            <div class="quick-actions-grid">
+                <a href="ride-booking.html" class="transport-action-card primary">
+                    <div class="transport-action-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <div class="transport-action-title">Book Ride</div>
+                    <div class="transport-action-desc">Find a ride to your destination</div>
+                </a>
+                
+                <a href="#" class="transport-action-card" onclick="trackRide()">
+                    <div class="transport-action-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="transport-action-title">Track Ride</div>
+                    <div class="transport-action-desc">Monitor your current ride</div>
+                </a>
+                
+                <a href="ride-history.html" class="transport-action-card">
+                    <div class="transport-action-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <div class="transport-action-title">Ride History</div>
+                    <div class="transport-action-desc">View past rides</div>
+                </a>
+                
+                <a href="wallet.html" class="transport-action-card">
+                    <div class="transport-action-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <div class="transport-action-title">Wallet</div>
+                    <div class="transport-action-desc">Manage payments</div>
+                </a>
+            </div>
+        </div>
 
         <!-- Stats Grid -->
         <section class="stats-section">
@@ -403,6 +401,7 @@
 
     <!-- Scripts -->
     <script src="../js/themes.js"></script>
+    <script src="../js/notification-service.js"></script>
     <script src="../js/student-dashboard.js"></script>
 </body>
 </html>

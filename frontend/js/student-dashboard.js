@@ -369,26 +369,33 @@ class StudentDashboard {
 // Global functions for onclick handlers
 function bookRide() {
     console.log('Booking new ride...');
-    // TODO: Implement ride booking
-    alert('Book Ride feature - Coming Soon!\nThis will open the ride booking interface.');
+    window.location.href = 'ride-booking.html';
 }
 
 function trackRide() {
     console.log('Tracking current ride...');
-    // TODO: Implement ride tracking
-    alert('Track Ride feature - Coming Soon!\nThis will show real-time ride tracking.');
+    // Check if user has an active ride
+    const activeRideId = localStorage.getItem('activeRideId');
+    if (activeRideId) {
+        window.location.href = `ride-tracking.html?rideId=${activeRideId}`;
+    } else {
+        window.rideTrackingInstance?.showNotification('No active ride found. Book a ride first!', 'info');
+    }
 }
 
 function viewHistory() {
     console.log('Viewing ride history...');
-    // TODO: Implement ride history
-    alert('Ride History feature - Coming Soon!\nThis will display your past rides.');
+    window.location.href = 'ride-history.html';
 }
 
 function manageWallet() {
     console.log('Managing wallet...');
-    // TODO: Implement wallet management
-    alert('Wallet Management feature - Coming Soon!\nThis will open wallet interface.');
+    window.location.href = 'wallet.html';
+}
+
+function viewNotifications() {
+    console.log('Viewing notifications...');
+    window.location.href = 'notifications.html';
 }
 
 // Initialize dashboard when DOM is loaded

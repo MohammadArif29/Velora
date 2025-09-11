@@ -14,6 +14,7 @@ class CaptainDashboard {
         this.loadDashboardData();
         this.setupMobileNavigation();
         this.setupDesktopSidebar();
+        this.initializeRideManagement();
     }
 
     setupEventListeners() {
@@ -348,9 +349,7 @@ class CaptainDashboard {
     }
 
     startKYC() {
-        this.showNotification('KYC verification process will be implemented soon!', 'info');
-        // TODO: Implement KYC flow
-        console.log('Starting KYC process...');
+        window.location.href = 'captain-kyc.html';
     }
 
     viewKYCStatus() {
@@ -432,7 +431,7 @@ class CaptainDashboard {
 // Global functions for onclick handlers
 function viewRideRequests() {
     console.log('Viewing ride requests...');
-    // TODO: Implement ride requests view
+    window.location.href = 'captain-requests.html';
 }
 
 function manageActiveRides() {
@@ -458,7 +457,489 @@ function viewKYCStatus() {
     // This will be handled by the CaptainDashboard class
 }
 
+    // Ride Management Functions
+    async initializeRideManagement() {
+        try {
+            await this.checkAuth();
+            await this.loadAvailableRides();
+            this.startRidePolling();
+        } catch (error) {
+            console.error('Error initializing ride management:', error);
+        }
+    }
+
+    async checkAuth() {
+        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+        if (!token) {
+            throw new Error('No authentication token found');
+        }
+
+        try {
+            const response = await fetch('/api/auth/verify', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Authentication failed');
+            }
+
+            const data = await response.json();
+            this.currentUser = data.user;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async loadAvailableRides() {
+        try {
+            const response = await fetch('/api/rides/available', {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token') || sessionStorage.getItem('token')}`
+                }
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                this.displayAvailableRides(data.rides);
+            }
+        } catch (error) {
+            console.error('Error loading available rides:', error);
+        }
+    }
+
+    displayAvailableRides(rides) {
+        const ridesList = document.getElementById('ridesList');
+        if (!ridesList) return;
+
+        ridesList.innerHTML = '';
+
+        if (rides.length === 0) {
+            ridesList.innerHTML = `
+                <div class="no-rides">
+                    <i class="fas fa-car"></i>
+                    <p>No available rides at the moment</p>
+                </div>
+            `;
+            return;
+        }
+
+        rides.forEach(ride => {
+            const rideCard = document.createElement('div');
+            rideCard.className = 'ride-card';
+            rideCard.innerHTML = `
+                <div class="ride-card-header">
+                    <div class="ride-info">
+                        <h5>Ride Request</h5>
+                        <span class="ride-time">${new Date(ride.requested_at).toLocaleTimeString()}</span>
+                    </div>
+                    <div class="ride-fare">₹${ride.fare_amount}</div>
+                </div>
+                <div class="ride-card-content">
+                    <div class="ride-location">
+                        <div class="location-item">
+                            <i class="fas fa-circle pickup"></i>
+                            <span>${ride.pickup_location}</span>
+                        </div>
+                        <div class="location-item">
+                            <i class="fas fa-map-marker-alt dropoff"></i>
+                            <span>${ride.dropoff_location}</span>
+                        </div>
+                    </div>
+                    <div class="ride-details">
+                        <div class="detail-item">
+                            <i class="fas fa-user"></i>
+                            <span>${ride.student_username}</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-route"></i>
+                            <span>${ride.distance_km} km</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-clock"></i>
+                            <span>${ride.estimated_duration} min</span>
+                        </div>
+                    </div>
+                    <div class="ride-actions">
+                        <button class="btn btn-success btn-sm" onclick="acceptRide(${ride.id})">
+                            <i class="fas fa-check"></i>
+                            Accept
+                        </button>
+                        <button class="btn btn-secondary btn-sm" onclick="viewRideDetails(${ride.id})">
+                            <i class="fas fa-eye"></i>
+                            View
+                        </button>
+                    </div>
+                </div>
+            `;
+            ridesList.appendChild(rideCard);
+        });
+    }
+
+    async acceptRide(rideId) {
+        try {
+            const response = await fetch(`/api/rides/${rideId}/accept`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token') || sessionStorage.getItem('token')}`
+                }
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                this.showNotification('Ride accepted successfully!', 'success');
+                await this.loadAvailableRides();
+                await this.loadCurrentRide(rideId);
+            } else {
+                this.showNotification(data.message || 'Failed to accept ride', 'error');
+            }
+        } catch (error) {
+            console.error('Error accepting ride:', error);
+            this.showNotification('Failed to accept ride', 'error');
+        }
+    }
+
+    async loadCurrentRide(rideId) {
+        try {
+            const response = await fetch(`/api/rides/${rideId}`, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token') || sessionStorage.getItem('token')}`
+                }
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                this.displayCurrentRide(data.ride);
+            }
+        } catch (error) {
+            console.error('Error loading current ride:', error);
+        }
+    }
+
+    displayCurrentRide(ride) {
+        const currentRideDiv = document.getElementById('currentRide');
+        const pickupAddress = document.getElementById('pickupAddress');
+        const dropoffAddress = document.getElementById('dropoffAddress');
+        const studentName = document.getElementById('studentName');
+        const rideFare = document.getElementById('rideFare');
+        const rideStatusBadge = document.getElementById('rideStatusBadge');
+
+        if (currentRideDiv && pickupAddress && dropoffAddress && studentName && rideFare && rideStatusBadge) {
+            pickupAddress.textContent = ride.pickup_location;
+            dropoffAddress.textContent = ride.dropoff_location;
+            studentName.textContent = ride.student_username;
+            rideFare.textContent = `₹${ride.fare_amount}`;
+            
+            switch (ride.status) {
+                case 'accepted':
+                    rideStatusBadge.textContent = 'Accepted';
+                    rideStatusBadge.style.background = '#10b981';
+                    break;
+                case 'arrived':
+                    rideStatusBadge.textContent = 'Arrived';
+                    rideStatusBadge.style.background = '#3b82f6';
+                    break;
+                case 'started':
+                    rideStatusBadge.textContent = 'In Progress';
+                    rideStatusBadge.style.background = '#8b5cf6';
+                    break;
+            }
+            
+            currentRideDiv.style.display = 'block';
+            this.currentRide = ride;
+        }
+    }
+
+    async markArrived() {
+        if (!this.currentRide) return;
+
+        try {
+            const response = await fetch(`/api/rides/${this.currentRide.id}/status`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token') || sessionStorage.getItem('token')}`
+                },
+                body: JSON.stringify({
+                    status: 'arrived'
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                this.showNotification('Arrived at pickup location', 'success');
+                this.updateRideActions('arrived');
+            } else {
+                this.showNotification(data.message || 'Failed to update status', 'error');
+            }
+        } catch (error) {
+            console.error('Error marking arrived:', error);
+            this.showNotification('Failed to update status', 'error');
+        }
+    }
+
+    async startRide() {
+        if (!this.currentRide) return;
+
+        try {
+            const response = await fetch(`/api/rides/${this.currentRide.id}/status`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token') || sessionStorage.getItem('token')}`
+                },
+                body: JSON.stringify({
+                    status: 'started'
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                this.showNotification('Ride started', 'success');
+                this.updateRideActions('started');
+            } else {
+                this.showNotification(data.message || 'Failed to start ride', 'error');
+            }
+        } catch (error) {
+            console.error('Error starting ride:', error);
+            this.showNotification('Failed to start ride', 'error');
+        }
+    }
+
+    async completeRide() {
+        if (!this.currentRide) return;
+
+        try {
+            const response = await fetch(`/api/rides/${this.currentRide.id}/status`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token') || sessionStorage.getItem('token')}`
+                },
+                body: JSON.stringify({
+                    status: 'completed'
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                this.showNotification('Ride completed successfully!', 'success');
+                this.resetCurrentRide();
+            } else {
+                this.showNotification(data.message || 'Failed to complete ride', 'error');
+            }
+        } catch (error) {
+            console.error('Error completing ride:', error);
+            this.showNotification('Failed to complete ride', 'error');
+        }
+    }
+
+    async cancelRide() {
+        if (!this.currentRide) return;
+
+        if (!confirm('Are you sure you want to cancel this ride?')) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/rides/${this.currentRide.id}/status`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token') || sessionStorage.getItem('token')}`
+                },
+                body: JSON.stringify({
+                    status: 'cancelled',
+                    cancellation_reason: 'Cancelled by captain'
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                this.showNotification('Ride cancelled', 'success');
+                this.resetCurrentRide();
+            } else {
+                this.showNotification(data.message || 'Failed to cancel ride', 'error');
+            }
+        } catch (error) {
+            console.error('Error cancelling ride:', error);
+            this.showNotification('Failed to cancel ride', 'error');
+        }
+    }
+
+    updateRideActions(status) {
+        const arrivedBtn = document.getElementById('arrivedBtn');
+        const startRideBtn = document.getElementById('startRideBtn');
+        const completeRideBtn = document.getElementById('completeRideBtn');
+
+        if (arrivedBtn && startRideBtn && completeRideBtn) {
+            switch (status) {
+                case 'accepted':
+                    arrivedBtn.style.display = 'inline-flex';
+                    startRideBtn.style.display = 'none';
+                    completeRideBtn.style.display = 'none';
+                    break;
+                case 'arrived':
+                    arrivedBtn.style.display = 'none';
+                    startRideBtn.style.display = 'inline-flex';
+                    completeRideBtn.style.display = 'none';
+                    break;
+                case 'started':
+                    arrivedBtn.style.display = 'none';
+                    startRideBtn.style.display = 'none';
+                    completeRideBtn.style.display = 'inline-flex';
+                    break;
+            }
+        }
+    }
+
+    resetCurrentRide() {
+        const currentRideDiv = document.getElementById('currentRide');
+        if (currentRideDiv) {
+            currentRideDiv.style.display = 'none';
+        }
+        this.currentRide = null;
+        this.loadAvailableRides();
+    }
+
+    startRidePolling() {
+        setInterval(() => {
+            if (this.isOnline) {
+                this.loadAvailableRides();
+            }
+        }, 10000);
+    }
+
+    async toggleOnlineStatus() {
+        try {
+            this.isOnline = !this.isOnline;
+            
+            const response = await fetch('/api/rides/status', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token') || sessionStorage.getItem('token')}`
+                },
+                body: JSON.stringify({
+                    isOnline: this.isOnline
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                this.updateStatusUI();
+                this.showNotification(
+                    this.isOnline ? 'You are now online' : 'You are now offline',
+                    'success'
+                );
+            } else {
+                this.isOnline = !this.isOnline;
+                this.showNotification('Failed to update status', 'error');
+            }
+        } catch (error) {
+            console.error('Error toggling status:', error);
+            this.isOnline = !this.isOnline;
+            this.showNotification('Failed to update status', 'error');
+        }
+    }
+
+    updateStatusUI() {
+        const statusToggle = document.getElementById('statusToggle');
+        const statusText = document.getElementById('statusText');
+
+        if (statusToggle && statusText) {
+            if (this.isOnline) {
+                statusToggle.classList.add('online');
+                statusText.textContent = 'Online';
+            } else {
+                statusToggle.classList.remove('online');
+                statusText.textContent = 'Go Online';
+            }
+        }
+    }
+
+    showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        notification.innerHTML = `
+            <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+            <span>${message}</span>
+        `;
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 3000);
+    }
+}
+
+// Global functions for HTML onclick handlers
+function toggleOnlineStatus() {
+    if (window.captainDashboard) {
+        window.captainDashboard.toggleOnlineStatus();
+    }
+}
+
+function refreshRides() {
+    if (window.captainDashboard) {
+        window.captainDashboard.loadAvailableRides();
+    }
+}
+
+function acceptRide(rideId) {
+    if (window.captainDashboard) {
+        window.captainDashboard.acceptRide(rideId);
+    }
+}
+
+function viewRideDetails(rideId) {
+    if (window.captainDashboard) {
+        window.captainDashboard.loadCurrentRide(rideId);
+    }
+}
+
+function markArrived() {
+    if (window.captainDashboard) {
+        window.captainDashboard.markArrived();
+    }
+}
+
+function startRide() {
+    if (window.captainDashboard) {
+        window.captainDashboard.startRide();
+    }
+}
+
+function completeRide() {
+    if (window.captainDashboard) {
+        window.captainDashboard.completeRide();
+    }
+}
+
+function cancelRide() {
+    if (window.captainDashboard) {
+        window.captainDashboard.cancelRide();
+    }
+}
+
+function callStudent() {
+    alert('Calling student...');
+}
+
 // Initialize dashboard when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    new CaptainDashboard();
+    window.captainDashboard = new CaptainDashboard();
 });

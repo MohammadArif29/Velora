@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Wallet - Velora</title>
+    
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="../css/themes.css">
+    <link id="theme-css" rel="stylesheet" href="../css/dark-theme.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Wallet CSS -->
+    <link rel="stylesheet" href="../css/wallet.css">
+</head>
+<body>
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+        <div class="mobile-header-content">
+            <div class="mobile-header-left">
+                <button class="back-btn" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="mobile-logo">
+                    <i class="fas fa-wallet"></i>
+                    <span>Wallet</span>
+                </div>
+            </div>
+            <div class="mobile-header-right">
+                <button class="theme-toggle-mobile" id="themeToggleMobile">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="settings-btn" onclick="showSettings()">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Desktop Header -->
+    <header class="desktop-header">
+        <div class="desktop-header-content">
+            <div class="desktop-header-left">
+                <button class="back-btn" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h1 class="page-title">Wallet</h1>
+            </div>
+            <div class="desktop-header-right">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="settings-btn" onclick="showSettings()">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Balance Card -->
+        <div class="balance-card">
+            <div class="balance-header">
+                <h3>Velora Wallet</h3>
+                <div class="wallet-status">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Secure</span>
+                </div>
+            </div>
+            <div class="balance-amount">
+                <span class="currency">₹</span>
+                <span class="amount" id="walletBalance">1,250.00</span>
+            </div>
+            <div class="balance-actions">
+                <button class="action-btn" onclick="addMoney()">
+                    <i class="fas fa-plus"></i>
+                    Add Money
+                </button>
+                <button class="action-btn" onclick="withdrawMoney()">
+                    <i class="fas fa-minus"></i>
+                    Withdraw
+                </button>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <h3>Quick Actions</h3>
+            <div class="actions-grid">
+                <button class="action-card" onclick="addMoney()">
+                    <div class="action-icon">
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <span>Add Money</span>
+                </button>
+                <button class="action-card" onclick="withdrawMoney()">
+                    <div class="action-icon">
+                        <i class="fas fa-minus"></i>
+                    </div>
+                    <span>Withdraw</span>
+                </button>
+                <button class="action-card" onclick="viewTransactions()">
+                    <div class="action-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <span>History</span>
+                </button>
+                <button class="action-card" onclick="showPaymentMethods()">
+                    <div class="action-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <span>Payment Methods</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Recent Transactions -->
+        <div class="transactions-section">
+            <div class="section-header">
+                <h3>Recent Transactions</h3>
+                <button class="view-all-btn" onclick="viewAllTransactions()">View All</button>
+            </div>
+            <div class="transactions-list" id="transactionsList">
+                <!-- Transactions will be populated here -->
+            </div>
+        </div>
+
+        <!-- Payment Methods -->
+        <div class="payment-methods-section">
+            <div class="section-header">
+                <h3>Payment Methods</h3>
+                <button class="add-method-btn" onclick="addPaymentMethod()">
+                    <i class="fas fa-plus"></i>
+                    Add Method
+                </button>
+            </div>
+            <div class="payment-methods-list" id="paymentMethodsList">
+                <!-- Payment methods will be populated here -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Add Money Modal -->
+    <div class="modal" id="addMoneyModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add Money to Wallet</h3>
+                <button class="modal-close" onclick="closeAddMoneyModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="amount-selector">
+                    <h4>Select Amount</h4>
+                    <div class="amount-options">
+                        <button class="amount-option" data-amount="100">₹100</button>
+                        <button class="amount-option" data-amount="250">₹250</button>
+                        <button class="amount-option" data-amount="500">₹500</button>
+                        <button class="amount-option" data-amount="1000">₹1000</button>
+                        <button class="amount-option" data-amount="2000">₹2000</button>
+                        <button class="amount-option" data-amount="5000">₹5000</button>
+                    </div>
+                    <div class="custom-amount">
+                        <input type="number" id="customAmount" placeholder="Enter custom amount" min="10" max="50000">
+                    </div>
+                </div>
+                
+                <div class="payment-method-selector">
+                    <h4>Payment Method</h4>
+                    <div class="payment-options" id="paymentOptions">
+                        <!-- Payment options will be populated here -->
+                    </div>
+                </div>
+                
+                <div class="modal-actions">
+                    <button class="btn btn-outline" onclick="closeAddMoneyModal()">Cancel</button>
+                    <button class="btn btn-primary" onclick="processPayment()">Add Money</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Withdraw Money Modal -->
+    <div class="modal" id="withdrawModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Withdraw Money</h3>
+                <button class="modal-close" onclick="closeWithdrawModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="withdraw-form">
+                    <div class="form-group">
+                        <label for="withdrawAmount">Amount to Withdraw</label>
+                        <input type="number" id="withdrawAmount" placeholder="Enter amount" min="10" max="10000">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="withdrawMethod">Withdraw to</label>
+                        <select id="withdrawMethod">
+                            <option value="bank">Bank Account</option>
+                            <option value="upi">UPI</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group" id="bankDetails" style="display: none;">
+                        <label for="accountNumber">Account Number</label>
+                        <input type="text" id="accountNumber" placeholder="Enter account number">
+                    </div>
+                    
+                    <div class="form-group" id="upiDetails" style="display: none;">
+                        <label for="upiId">UPI ID</label>
+                        <input type="text" id="upiId" placeholder="Enter UPI ID">
+                    </div>
+                </div>
+                
+                <div class="modal-actions">
+                    <button class="btn btn-outline" onclick="closeWithdrawModal()">Cancel</button>
+                    <button class="btn btn-primary" onclick="processWithdrawal()">Withdraw</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/themes.js"></script>
+    <script src="../js/wallet.js"></script>
+</body>
+</html>

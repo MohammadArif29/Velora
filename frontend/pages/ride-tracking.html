@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Track Ride - Velora</title>
+    
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="../css/themes.css">
+    <link id="theme-css" rel="stylesheet" href="../css/dark-theme.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Ride Tracking CSS -->
+    <link rel="stylesheet" href="../css/ride-tracking.css">
+</head>
+<body>
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+        <div class="mobile-header-content">
+            <div class="mobile-header-left">
+                <button class="back-btn" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="mobile-logo">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Track Ride</span>
+                </div>
+            </div>
+            <div class="mobile-header-right">
+                <button class="theme-toggle-mobile" id="themeToggleMobile">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="emergency-btn" onclick="showEmergencyModal()">
+                    <i class="fas fa-phone"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Desktop Header -->
+    <header class="desktop-header">
+        <div class="desktop-header-content">
+            <div class="desktop-header-left">
+                <button class="back-btn" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h1 class="page-title">Track Your Ride</h1>
+            </div>
+            <div class="desktop-header-right">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="emergency-btn" onclick="showEmergencyModal()">
+                    <i class="fas fa-phone"></i>
+                    Emergency
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Ride Status Card -->
+        <div class="ride-status-card">
+            <div class="status-header">
+                <div class="ride-id">
+                    <span class="label">Ride ID:</span>
+                    <span class="value" id="rideId">#VR123456</span>
+                </div>
+                <div class="status-badge" id="statusBadge">
+                    <i class="fas fa-clock"></i>
+                    <span>Captain Assigned</span>
+                </div>
+            </div>
+            
+            <div class="status-timeline">
+                <div class="timeline-item completed">
+                    <div class="timeline-icon">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <h4>Ride Requested</h4>
+                        <p>Your ride request has been confirmed</p>
+                        <span class="timeline-time">2 min ago</span>
+                    </div>
+                </div>
+                
+                <div class="timeline-item completed">
+                    <div class="timeline-icon">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <h4>Captain Assigned</h4>
+                        <p>Captain Rajesh Kumar is on the way</p>
+                        <span class="timeline-time">1 min ago</span>
+                    </div>
+                </div>
+                
+                <div class="timeline-item active">
+                    <div class="timeline-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <h4>Captain Arriving</h4>
+                        <p>Captain is 2 minutes away</p>
+                        <span class="timeline-time">Now</span>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-icon">
+                        <i class="fas fa-flag-checkered"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <h4>Ride Started</h4>
+                        <p>Your journey has begun</p>
+                        <span class="timeline-time">Pending</span>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <h4>Ride Completed</h4>
+                        <p>You have reached your destination</p>
+                        <span class="timeline-time">Pending</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Captain Info Card -->
+        <div class="captain-info-card">
+            <div class="captain-header">
+                <div class="captain-avatar">
+                    <img src="https://via.placeholder.com/60x60/5A31F4/FFFFFF?text=RK" alt="Captain" id="captainAvatar">
+                </div>
+                <div class="captain-details">
+                    <h3 id="captainName">Rajesh Kumar</h3>
+                    <div class="captain-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="rating-value">4.8</span>
+                        <span class="rating-count">(127 rides)</span>
+                    </div>
+                    <div class="captain-vehicle">
+                        <i class="fas fa-motorcycle"></i>
+                        <span>Auto Rickshaw • TN 07 AB 1234</span>
+                    </div>
+                </div>
+                <div class="captain-actions">
+                    <button class="action-btn" onclick="callCaptain()">
+                        <i class="fas fa-phone"></i>
+                    </button>
+                    <button class="action-btn" onclick="messageCaptain()">
+                        <i class="fas fa-comment"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="captain-location">
+                <div class="location-info">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span id="captainLocation">2 minutes away • 0.8 km</span>
+                </div>
+                <div class="eta-info">
+                    <i class="fas fa-clock"></i>
+                    <span>ETA: <strong id="captainETA">2 min</strong></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Map Container -->
+        <div class="map-container">
+            <div class="map-header">
+                <h3>Live Tracking</h3>
+                <div class="map-controls">
+                    <button class="map-btn" onclick="centerMap()">
+                        <i class="fas fa-crosshairs"></i>
+                    </button>
+                    <button class="map-btn" onclick="toggleMapType()">
+                        <i class="fas fa-layer-group"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="map-placeholder" id="mapPlaceholder">
+                <div class="map-mockup">
+                    <div class="map-route">
+                        <div class="route-line"></div>
+                        <div class="route-point pickup">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="route-point destination">
+                            <i class="fas fa-flag"></i>
+                        </div>
+                        <div class="captain-marker">
+                            <i class="fas fa-car"></i>
+                        </div>
+                    </div>
+                    <div class="map-legend">
+                        <div class="legend-item">
+                            <div class="legend-color pickup"></div>
+                            <span>Your Location</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color destination"></div>
+                            <span>Destination</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color captain"></div>
+                            <span>Captain</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ride Details -->
+        <div class="ride-details-card">
+            <h3>Ride Details</h3>
+            <div class="ride-info-grid">
+                <div class="info-item">
+                    <div class="info-label">
+                        <i class="fas fa-route"></i>
+                        <span>Route</span>
+                    </div>
+                    <div class="info-value">
+                        <div class="route-text">
+                            <span class="pickup">MBU Campus</span>
+                            <i class="fas fa-arrow-right"></i>
+                            <span class="destination">Tirupati Railway Station</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-label">
+                        <i class="fas fa-route"></i>
+                        <span>Distance</span>
+                    </div>
+                    <div class="info-value">8.5 km</div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-label">
+                        <i class="fas fa-clock"></i>
+                        <span>Duration</span>
+                    </div>
+                    <div class="info-value">12 min</div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-label">
+                        <i class="fas fa-rupee-sign"></i>
+                        <span>Fare</span>
+                    </div>
+                    <div class="info-value">₹118</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn btn-outline" onclick="cancelRide()">
+                <i class="fas fa-times"></i>
+                Cancel Ride
+            </button>
+            <button class="btn btn-primary" onclick="shareRide()">
+                <i class="fas fa-share"></i>
+                Share Status
+            </button>
+        </div>
+    </main>
+
+    <!-- Emergency Modal -->
+    <div class="modal" id="emergencyModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Emergency Contacts</h3>
+                <button class="modal-close" onclick="closeEmergencyModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="emergency-contacts">
+                    <button class="emergency-contact" onclick="callEmergency('police')">
+                        <i class="fas fa-shield-alt"></i>
+                        <div class="contact-info">
+                            <h4>Police</h4>
+                            <p>100</p>
+                        </div>
+                    </button>
+                    
+                    <button class="emergency-contact" onclick="callEmergency('ambulance')">
+                        <i class="fas fa-ambulance"></i>
+                        <div class="contact-info">
+                            <h4>Ambulance</h4>
+                            <p>108</p>
+                        </div>
+                    </button>
+                    
+                    <button class="emergency-contact" onclick="callEmergency('velora')">
+                        <i class="fas fa-headset"></i>
+                        <div class="contact-info">
+                            <h4>Velora Support</h4>
+                            <p>+91 9876543210</p>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cancel Ride Modal -->
+    <div class="modal" id="cancelModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Cancel Ride</h3>
+                <button class="modal-close" onclick="closeCancelModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to cancel this ride? A cancellation fee may apply.</p>
+                <div class="modal-actions">
+                    <button class="btn btn-outline" onclick="closeCancelModal()">Keep Ride</button>
+                    <button class="btn btn-danger" onclick="confirmCancelRide()">Cancel Ride</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/themes.js"></script>
+    <script src="../js/ride-tracking.js"></script>
+</body>
+</html>

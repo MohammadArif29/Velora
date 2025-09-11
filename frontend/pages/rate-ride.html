@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Rate Your Ride - Velora</title>
+    
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="../css/themes.css">
+    <link id="theme-css" rel="stylesheet" href="../css/dark-theme.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Rate Ride CSS -->
+    <link rel="stylesheet" href="../css/rate-ride.css">
+</head>
+<body>
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+        <div class="mobile-header-content">
+            <div class="mobile-header-left">
+                <button class="back-btn" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="mobile-logo">
+                    <i class="fas fa-star"></i>
+                    <span>Rate Ride</span>
+                </div>
+            </div>
+            <div class="mobile-header-right">
+                <button class="theme-toggle-mobile" id="themeToggleMobile">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Desktop Header -->
+    <header class="desktop-header">
+        <div class="desktop-header-content">
+            <div class="desktop-header-left">
+                <button class="back-btn" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h1 class="page-title">Rate Your Ride</h1>
+            </div>
+            <div class="desktop-header-right">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Ride Summary -->
+        <div class="ride-summary-card">
+            <div class="ride-header">
+                <h3>Ride Completed</h3>
+                <div class="ride-id">#VR123456</div>
+            </div>
+            
+            <div class="captain-info">
+                <div class="captain-avatar">
+                    <img src="https://via.placeholder.com/60x60/5A31F4/FFFFFF?text=RK" alt="Captain" id="captainAvatar">
+                </div>
+                <div class="captain-details">
+                    <h4 id="captainName">Rajesh Kumar</h4>
+                    <p id="captainVehicle">Auto Rickshaw • TN 07 AB 1234</p>
+                    <div class="ride-route">
+                        <span id="rideRoute">MBU Campus → Tirupati Railway Station</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ride-details">
+                <div class="detail-item">
+                    <span class="label">Fare</span>
+                    <span class="value" id="rideFare">₹118</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Duration</span>
+                    <span class="value" id="rideDuration">12 min</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Distance</span>
+                    <span class="value" id="rideDistance">8.5 km</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rating Section -->
+        <div class="rating-section">
+            <h3>How was your ride?</h3>
+            <p>Your feedback helps us improve the service for everyone</p>
+            
+            <div class="rating-stars">
+                <div class="stars-container" id="starsContainer">
+                    <i class="fas fa-star" data-rating="1"></i>
+                    <i class="fas fa-star" data-rating="2"></i>
+                    <i class="fas fa-star" data-rating="3"></i>
+                    <i class="fas fa-star" data-rating="4"></i>
+                    <i class="fas fa-star" data-rating="5"></i>
+                </div>
+                <div class="rating-text" id="ratingText">Tap to rate</div>
+            </div>
+        </div>
+
+        <!-- Rating Categories -->
+        <div class="rating-categories" id="ratingCategories" style="display: none;">
+            <h4>Rate specific aspects</h4>
+            <div class="category-list">
+                <div class="category-item">
+                    <div class="category-info">
+                        <span class="category-name">Punctuality</span>
+                        <span class="category-desc">Was the captain on time?</span>
+                    </div>
+                    <div class="category-stars">
+                        <i class="fas fa-star" data-category="punctuality" data-rating="1"></i>
+                        <i class="fas fa-star" data-category="punctuality" data-rating="2"></i>
+                        <i class="fas fa-star" data-category="punctuality" data-rating="3"></i>
+                        <i class="fas fa-star" data-category="punctuality" data-rating="4"></i>
+                        <i class="fas fa-star" data-category="punctuality" data-rating="5"></i>
+                    </div>
+                </div>
+                
+                <div class="category-item">
+                    <div class="category-info">
+                        <span class="category-name">Safety</span>
+                        <span class="category-desc">Did you feel safe during the ride?</span>
+                    </div>
+                    <div class="category-stars">
+                        <i class="fas fa-star" data-category="safety" data-rating="1"></i>
+                        <i class="fas fa-star" data-category="safety" data-rating="2"></i>
+                        <i class="fas fa-star" data-category="safety" data-rating="3"></i>
+                        <i class="fas fa-star" data-category="safety" data-rating="4"></i>
+                        <i class="fas fa-star" data-category="safety" data-rating="5"></i>
+                    </div>
+                </div>
+                
+                <div class="category-item">
+                    <div class="category-info">
+                        <span class="category-name">Cleanliness</span>
+                        <span class="category-desc">How clean was the vehicle?</span>
+                    </div>
+                    <div class="category-stars">
+                        <i class="fas fa-star" data-category="cleanliness" data-rating="1"></i>
+                        <i class="fas fa-star" data-category="cleanliness" data-rating="2"></i>
+                        <i class="fas fa-star" data-category="cleanliness" data-rating="3"></i>
+                        <i class="fas fa-star" data-category="cleanliness" data-rating="4"></i>
+                        <i class="fas fa-star" data-category="cleanliness" data-rating="5"></i>
+                    </div>
+                </div>
+                
+                <div class="category-item">
+                    <div class="category-info">
+                        <span class="category-name">Communication</span>
+                        <span class="category-desc">How well did the captain communicate?</span>
+                    </div>
+                    <div class="category-stars">
+                        <i class="fas fa-star" data-category="communication" data-rating="1"></i>
+                        <i class="fas fa-star" data-category="communication" data-rating="2"></i>
+                        <i class="fas fa-star" data-category="communication" data-rating="3"></i>
+                        <i class="fas fa-star" data-category="communication" data-rating="4"></i>
+                        <i class="fas fa-star" data-category="communication" data-rating="5"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Review Section -->
+        <div class="review-section">
+            <h4>Write a review (Optional)</h4>
+            <textarea 
+                id="reviewText" 
+                placeholder="Share your experience with other students..."
+                maxlength="500"
+            ></textarea>
+            <div class="char-count">
+                <span id="charCount">0</span>/500 characters
+            </div>
+        </div>
+
+        <!-- Quick Feedback -->
+        <div class="quick-feedback">
+            <h4>Quick feedback</h4>
+            <div class="feedback-tags">
+                <button class="feedback-tag" data-tag="excellent">Excellent</button>
+                <button class="feedback-tag" data-tag="good">Good</button>
+                <button class="feedback-tag" data-tag="average">Average</button>
+                <button class="feedback-tag" data-tag="poor">Poor</button>
+                <button class="feedback-tag" data-tag="late">Late arrival</button>
+                <button class="feedback-tag" data-tag="rude">Rude behavior</button>
+                <button class="feedback-tag" data-tag="unsafe">Unsafe driving</button>
+                <button class="feedback-tag" data-tag="dirty">Dirty vehicle</button>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="submit-section">
+            <button class="btn btn-primary" id="submitRating" onclick="submitRating()" disabled>
+                <i class="fas fa-star"></i>
+                Submit Rating
+            </button>
+        </div>
+    </main>
+
+    <!-- Thank You Modal -->
+    <div class="modal" id="thankYouModal">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="thank-you-content">
+                    <div class="thank-you-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>Thank You!</h3>
+                    <p>Your feedback has been submitted successfully. It helps us improve our service.</p>
+                    <button class="btn btn-primary" onclick="goToDashboard()">
+                        <i class="fas fa-home"></i>
+                        Go to Dashboard
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/themes.js"></script>
+    <script src="../js/rate-ride.js"></script>
+</body>
+</html>

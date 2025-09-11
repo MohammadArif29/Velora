@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Ride - Velora</title>
+    
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="../css/themes.css">
+    <link rel="stylesheet" href="../css/dark-theme.css">
+    <link rel="stylesheet" href="../css/light-theme.css">
+    
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="../css/ride-booking.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="header-left">
+                <button class="back-btn" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="header-title">
+                    <h1>Book a Ride</h1>
+                    <p>Find your perfect ride</p>
+                </div>
+            </div>
+            
+            <div class="header-right">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="user-menu">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-dropdown">
+                        <a href="student-dashboard.html">
+                            <i class="fas fa-home"></i>
+                            Dashboard
+                        </a>
+                        <a href="wallet.html">
+                            <i class="fas fa-wallet"></i>
+                            Wallet
+                        </a>
+                        <a href="#" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="booking-container">
+            <!-- Location Input -->
+            <div class="location-section">
+                <div class="location-input">
+                    <div class="input-group">
+                        <div class="input-icon pickup">
+                            <i class="fas fa-circle"></i>
+                        </div>
+                        <input type="text" id="pickupLocation" placeholder="Pickup location" required>
+                        <button class="location-btn" onclick="getCurrentLocation('pickup')">
+                            <i class="fas fa-crosshairs"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="input-group">
+                        <div class="input-icon dropoff">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <input type="text" id="dropoffLocation" placeholder="Dropoff location" required>
+                        <button class="location-btn" onclick="getCurrentLocation('dropoff')">
+                            <i class="fas fa-crosshairs"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="location-actions">
+                    <button class="btn btn-secondary" onclick="swapLocations()">
+                        <i class="fas fa-exchange-alt"></i>
+                        Swap
+                    </button>
+                    <button class="btn btn-primary" onclick="calculateFare()">
+                        <i class="fas fa-calculator"></i>
+                        Calculate Fare
+                    </button>
+                </div>
+            </div>
+
+            <!-- Fare Display -->
+            <div class="fare-section" id="fareSection" style="display: none;">
+                <div class="fare-card">
+                    <div class="fare-info">
+                        <div class="fare-item">
+                            <span class="fare-label">Distance</span>
+                            <span class="fare-value" id="distanceValue">0 km</span>
+                        </div>
+                        <div class="fare-item">
+                            <span class="fare-label">Duration</span>
+                            <span class="fare-value" id="durationValue">0 min</span>
+                        </div>
+                        <div class="fare-item total">
+                            <span class="fare-label">Total Fare</span>
+                            <span class="fare-value" id="totalFare">₹0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Special Instructions -->
+            <div class="instructions-section">
+                <label for="specialInstructions">Special Instructions (Optional)</label>
+                <textarea id="specialInstructions" placeholder="Any special requests for your ride..."></textarea>
+            </div>
+
+            <!-- Book Ride Button -->
+            <div class="book-section">
+                <button class="btn btn-primary btn-large" id="bookRideBtn" onclick="bookRide()" disabled>
+                    <i class="fas fa-car"></i>
+                    Book Ride
+                </button>
+            </div>
+
+            <!-- Ride Status -->
+            <div class="ride-status" id="rideStatus" style="display: none;">
+                <div class="status-card">
+                    <div class="status-header">
+                        <h3>Ride Requested</h3>
+                        <div class="status-badge" id="statusBadge">Searching for captain...</div>
+                    </div>
+                    <div class="status-content">
+                        <div class="ride-info">
+                            <div class="ride-detail">
+                                <i class="fas fa-map-marker-alt pickup"></i>
+                                <span id="statusPickup">Pickup location</span>
+                            </div>
+                            <div class="ride-detail">
+                                <i class="fas fa-flag-checkered dropoff"></i>
+                                <span id="statusDropoff">Dropoff location</span>
+                            </div>
+                            <div class="ride-detail">
+                                <i class="fas fa-rupee-sign"></i>
+                                <span id="statusFare">Fare amount</span>
+                            </div>
+                        </div>
+                        <div class="status-actions">
+                            <button class="btn btn-danger" onclick="cancelRide()">
+                                <i class="fas fa-times"></i>
+                                Cancel Ride
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Captain Found -->
+            <div class="captain-info" id="captainInfo" style="display: none;">
+                <div class="captain-card">
+                    <div class="captain-header">
+                        <div class="captain-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="captain-details">
+                            <h4 id="captainName">Captain Name</h4>
+                            <p id="captainRating">⭐ 4.8</p>
+                        </div>
+                        <div class="captain-vehicle">
+                            <i class="fas fa-car"></i>
+                            <span id="vehicleInfo">Vehicle Info</span>
+                        </div>
+                    </div>
+                    <div class="captain-status">
+                        <div class="status-item">
+                            <i class="fas fa-clock"></i>
+                            <span id="eta">ETA: 5 min</span>
+                        </div>
+                        <div class="status-item">
+                            <i class="fas fa-phone"></i>
+                            <button class="btn btn-sm" onclick="callCaptain()">Call</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Processing...</p>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div class="notification-container" id="notificationContainer"></div>
+
+    <!-- Scripts -->
+    <script src="../js/themes.js"></script>
+    <script src="../js/ride-booking.js"></script>
+</body>
+</html>

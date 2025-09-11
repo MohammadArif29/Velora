@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Ride History - Velora</title>
+    
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="../css/themes.css">
+    <link id="theme-css" rel="stylesheet" href="../css/dark-theme.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Ride History CSS -->
+    <link rel="stylesheet" href="../css/ride-history.css">
+</head>
+<body>
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+        <div class="mobile-header-content">
+            <div class="mobile-header-left">
+                <button class="back-btn" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="mobile-logo">
+                    <i class="fas fa-history"></i>
+                    <span>Ride History</span>
+                </div>
+            </div>
+            <div class="mobile-header-right">
+                <button class="theme-toggle-mobile" id="themeToggleMobile">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="filter-btn" onclick="showFilters()">
+                    <i class="fas fa-filter"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Desktop Header -->
+    <header class="desktop-header">
+        <div class="desktop-header-content">
+            <div class="desktop-header-left">
+                <button class="back-btn" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h1 class="page-title">Ride History</h1>
+            </div>
+            <div class="desktop-header-right">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="filter-btn" onclick="showFilters()">
+                    <i class="fas fa-filter"></i>
+                    Filters
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Stats Overview -->
+        <div class="stats-overview">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-car"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-value" id="totalRides">24</div>
+                    <div class="stat-label">Total Rides</div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-rupee-sign"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-value" id="totalSpent">₹2,850</div>
+                    <div class="stat-label">Total Spent</div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-value" id="avgRating">4.8</div>
+                    <div class="stat-label">Avg Rating</div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-value" id="avgWaitTime">3.2 min</div>
+                    <div class="stat-label">Avg Wait Time</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-section">
+            <div class="chart-card">
+                <h3>Rides This Month</h3>
+                <canvas id="ridesChart"></canvas>
+            </div>
+            
+            <div class="chart-card">
+                <h3>Spending Trend</h3>
+                <canvas id="spendingChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters-section" id="filtersSection" style="display: none;">
+            <div class="filter-card">
+                <h4>Filter Rides</h4>
+                <div class="filter-options">
+                    <div class="filter-group">
+                        <label>Date Range</label>
+                        <select id="dateRange">
+                            <option value="all">All Time</option>
+                            <option value="week">Last Week</option>
+                            <option value="month">Last Month</option>
+                            <option value="quarter">Last 3 Months</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label>Ride Type</label>
+                        <select id="rideType">
+                            <option value="all">All Types</option>
+                            <option value="solo">Solo Rides</option>
+                            <option value="shared">Shared Rides</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label>Status</label>
+                        <select id="rideStatus">
+                            <option value="all">All Status</option>
+                            <option value="completed">Completed</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="filter-actions">
+                    <button class="btn btn-outline" onclick="clearFilters()">Clear</button>
+                    <button class="btn btn-primary" onclick="applyFilters()">Apply</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ride History List -->
+        <div class="rides-section">
+            <div class="section-header">
+                <h3>Recent Rides</h3>
+                <div class="view-toggle">
+                    <button class="toggle-btn active" data-view="list">
+                        <i class="fas fa-list"></i>
+                    </button>
+                    <button class="toggle-btn" data-view="grid">
+                        <i class="fas fa-th"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="rides-list" id="ridesList">
+                <!-- Rides will be populated here -->
+            </div>
+
+            <!-- Load More Button -->
+            <div class="load-more-section">
+                <button class="btn btn-outline" onclick="loadMoreRides()">
+                    <i class="fas fa-plus"></i>
+                    Load More Rides
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Ride Details Modal -->
+    <div class="modal" id="rideDetailsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Ride Details</h3>
+                <button class="modal-close" onclick="closeRideDetailsModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="ride-details" id="rideDetails">
+                    <!-- Ride details will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/themes.js"></script>
+    <script src="../js/ride-history.js"></script>
+</body>
+</html>
