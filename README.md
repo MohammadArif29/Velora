@@ -66,7 +66,8 @@ Velora is a comprehensive real-time transportation management system designed ex
 - Google Maps API integration
 - Real-time updates with WebSocket
 - Responsive design with mobile-first approach
-- Dark/Light theme support
+- Dark/Light theme support with system-wide consistency
+- AI-powered chatbot with Gemini integration
 
 ### Backend
 - Node.js
@@ -144,10 +145,20 @@ Velora/
 - Background: Dynamic (Light/Dark theme support)
 
 ### Theme Support
-- Light and Dark mode
+- Light and Dark mode with consistent UI across all components
 - Automatic system preference detection
-- Manual toggle option
+- Manual toggle option with smooth transitions
 - Persistent user preference
+- Instagram-inspired dark theme design
+- Theme-aware components (including chatbot interface)
+
+## Chatbot Assistant
+- AI-powered support using Google's Gemini API
+- Intelligent responses for transportation queries
+- Theme-aware Instagram-inspired interface
+- Real-time interaction with smooth animations
+- Context-aware responses about Velora services
+- Seamless integration with the main application
 
 ## Security Features
 - JWT-based authentication
