@@ -18,6 +18,8 @@ const adminRoutes = require('../routes/admin');
 const kycRoutes = require('../routes/kyc');
 const rideRoutes = require('../routes/rides');
 const paymentRoutes = require('../routes/payments');
+const userRoutes = require('../routes/user');
+const configRoutes = require('../routes/config');
 
 // Middleware
 app.use(cors());
@@ -46,6 +48,8 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/kyc', kycRoutes);
 app.use('/api', rideRoutes);
 app.use('/api', paymentRoutes);
+app.use('/api', userRoutes);
+app.use('/api', configRoutes);
 
 // Basic API route
 app.get('/api', (req, res) => {

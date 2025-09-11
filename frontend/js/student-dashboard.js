@@ -364,6 +364,230 @@ class StudentDashboard {
             }, 300);
         }, 3000);
     }
+
+    showProfileModal() {
+        const userInfo = JSON.parse(localStorage.getItem('velora_user') || '{}');
+        
+        const modal = document.createElement('div');
+        modal.className = 'modal-overlay';
+        modal.innerHTML = `
+            <div class="modal-content profile-modal">
+                <div class="modal-header">
+                    <h3>Profile Settings</h3>
+                    <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="profileForm" class="profile-form">
+                        <div class="form-group">
+                            <label for="fullName">Full Name</label>
+                            <input type="text" id="fullName" name="fullName" value="${userInfo.fullName || ''}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" value="${userInfo.email || ''}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobile">Mobile Number</label>
+                            <input type="tel" id="mobile" name="mobile" value="${userInfo.mobile || ''}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="studentId">Student ID</label>
+                            <input type="text" id="studentId" name="studentId" value="${userInfo.studentId || ''}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="emergencyContact">Emergency Contact</label>
+                            <input type="tel" id="emergencyContact" name="emergencyContact" value="${userInfo.emergencyContact || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <textarea id="address" name="address" rows="3">${userInfo.address || ''}</textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="this.closest('.modal-overlay').remove()">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Handle form submission
+        document.getElementById('profileForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.updateProfile();
+        });
+    }
+
+    showRatingsModal() {
+        const modal = document.createElement('div');
+        modal.className = 'modal-overlay';
+        modal.innerHTML = `
+            <div class="modal-content ratings-modal">
+                <div class="modal-header">
+                    <h3>Your Ratings & Reviews</h3>
+                    <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="ratings-summary">
+                        <div class="overall-rating">
+                            <div class="rating-number">4.8</div>
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="rating-count">Based on 24 reviews</div>
+                        </div>
+                    </div>
+                    <div class="reviews-list">
+                        <div class="review-item">
+                            <div class="review-header">
+                                <div class="reviewer-info">
+                                    <div class="reviewer-avatar">RC</div>
+                                    <div class="reviewer-details">
+                                        <h4>Ravi Captain</h4>
+                                        <div class="review-rating">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="review-date">2 days ago</div>
+                            </div>
+                            <div class="review-text">
+                                "Excellent passenger! Very polite and punctual. Would definitely recommend."
+                            </div>
+                        </div>
+                        <div class="review-item">
+                            <div class="review-header">
+                                <div class="reviewer-info">
+                                    <div class="reviewer-avatar">SK</div>
+                                    <div class="reviewer-details">
+                                        <h4>Suresh Kumar</h4>
+                                        <div class="review-rating">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="review-date">1 week ago</div>
+                            </div>
+                            <div class="review-text">
+                                "Good passenger, no issues during the ride."
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+    }
+
+    showHelpModal() {
+        const modal = document.createElement('div');
+        modal.className = 'modal-overlay';
+        modal.innerHTML = `
+            <div class="modal-content help-modal">
+                <div class="modal-header">
+                    <h3>Help Center</h3>
+                    <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="help-sections">
+                        <div class="help-section">
+                            <h4><i class="fas fa-question-circle"></i> Frequently Asked Questions</h4>
+                            <div class="faq-list">
+                                <div class="faq-item">
+                                    <div class="faq-question">How do I book a ride?</div>
+                                    <div class="faq-answer">Click on "Book Ride" and select your pickup and destination locations.</div>
+                                </div>
+                                <div class="faq-item">
+                                    <div class="faq-question">How do I pay for rides?</div>
+                                    <div class="faq-answer">You can pay using your wallet, UPI, or cash on delivery.</div>
+                                </div>
+                                <div class="faq-item">
+                                    <div class="faq-question">What if my ride is cancelled?</div>
+                                    <div class="faq-answer">You'll be notified and can book another ride immediately.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="help-section">
+                            <h4><i class="fas fa-phone"></i> Contact Support</h4>
+                            <div class="contact-info">
+                                <div class="contact-item">
+                                    <i class="fas fa-phone"></i>
+                                    <span>+91 9876543210</span>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="fas fa-envelope"></i>
+                                    <span>support@velora.com</span>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>24/7 Support Available</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+    }
+
+    async updateProfile() {
+        const form = document.getElementById('profileForm');
+        const formData = new FormData(form);
+        const profileData = Object.fromEntries(formData.entries());
+        
+        try {
+            const token = localStorage.getItem('velora_token');
+            const response = await fetch('/api/user/profile', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(profileData)
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                this.showNotification('Profile updated successfully!', 'success');
+                // Update localStorage
+                const userInfo = JSON.parse(localStorage.getItem('velora_user') || '{}');
+                Object.assign(userInfo, profileData);
+                localStorage.setItem('velora_user', JSON.stringify(userInfo));
+                this.updateUserInfo();
+                // Close modal
+                document.querySelector('.modal-overlay').remove();
+            } else {
+                this.showNotification(data.message || 'Failed to update profile', 'error');
+            }
+        } catch (error) {
+            console.error('Error updating profile:', error);
+            this.showNotification('Failed to update profile', 'error');
+        }
+    }
 }
 
 // Global functions for onclick handlers
@@ -379,7 +603,7 @@ function trackRide() {
     if (activeRideId) {
         window.location.href = `ride-tracking.html?rideId=${activeRideId}`;
     } else {
-        window.rideTrackingInstance?.showNotification('No active ride found. Book a ride first!', 'info');
+        window.studentDashboard?.showNotification('No active ride found. Book a ride first!', 'info');
     }
 }
 
@@ -398,7 +622,22 @@ function viewNotifications() {
     window.location.href = 'notifications.html';
 }
 
+function viewProfile() {
+    console.log('Viewing profile...');
+    window.studentDashboard?.showProfileModal();
+}
+
+function viewRatings() {
+    console.log('Viewing ratings...');
+    window.studentDashboard?.showRatingsModal();
+}
+
+function viewHelpCenter() {
+    console.log('Viewing help center...');
+    window.studentDashboard?.showHelpModal();
+}
+
 // Initialize dashboard when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    new StudentDashboard();
+    window.studentDashboard = new StudentDashboard();
 });

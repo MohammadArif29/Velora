@@ -162,8 +162,8 @@
 }
 
 .booking-container {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
     gap: 2rem;
 }
 
@@ -257,6 +257,12 @@
     border-radius: var(--radius);
     padding: 1.5rem;
     box-shadow: var(--shadow-sm);
+}
+
+/* Right column sticky panel */
+.fare-section, .instructions-section, .book-section {
+    position: sticky;
+    top: 90px;
 }
 
 .fare-card {
@@ -662,4 +668,6 @@
     .notification {
         min-width: auto;
     }
+
+    .booking-container { grid-template-columns: 1fr; }
 }

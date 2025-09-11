@@ -8,7 +8,7 @@ class User {
         this.pool = mysql.createPool({
             host: process.env.DB_HOST || 'localhost',
             user: process.env.DB_USER || 'root',
-            password: process.env.DB_PASSWORD || '1234',
+            password: process.env.DB_PASSWORD || '12345',
             database: process.env.DB_NAME || 'velora_db',
             waitForConnections: true,
             connectionLimit: 10,

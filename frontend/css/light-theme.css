@@ -9,9 +9,14 @@
     
     /* Light Theme Backgrounds */
     --bg-primary: #FFFFFF;
+    --bg-primary-rgb: 255, 255, 255;
     --bg-secondary: #F8F9FA;
+    --bg-secondary-rgb: 248, 249, 250;
     --surface: #FFFFFF;
+    --surface-rgb: 255, 255, 255;
     --surface-glow: #F3F4F6;
+    --card-bg: #FFFFFF;
+    --card-bg-rgb: 255, 255, 255;
     
     /* Light Theme Text */
     --text-primary: #1F2937;

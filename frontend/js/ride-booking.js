@@ -4,6 +4,7 @@ class RideBooking {
         this.currentRide = null;
         this.userLocation = null;
         this.rideStatusInterval = null;
+        this.maps = { apiKey: null, map: null, pickupAutocomplete: null, dropoffAutocomplete: null, directionsService: null, directionsRenderer: null };
         this.init();
     }
 
@@ -13,6 +14,8 @@ class RideBooking {
             this.initializeTheme();
             this.setupEventListeners();
             await this.getCurrentLocation();
+            await this.loadMapsKeyAndSDK();
+            this.initMapsAutocomplete();
             console.log('✅ Ride booking initialized successfully');
         } catch (error) {
             console.error('❌ Ride booking initialization error:', error);
@@ -50,12 +53,66 @@ class RideBooking {
 
     initializeTheme() {
         const themeToggle = document.getElementById('themeToggle');
-        const currentTheme = localStorage.getItem('theme') || 'light';
+        const currentTheme = localStorage.getItem('theme') || 'dark';
         
         document.documentElement.setAttribute('data-theme', currentTheme);
         
         if (themeToggle) {
             themeToggle.innerHTML = currentTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        }
+    }
+
+    async loadMapsKeyAndSDK() {
+        try {
+            const res = await fetch('/api/config/maps-key');
+            const data = await res.json();
+            if (!data.success) return;
+            this.maps.apiKey = data.key;
+            if (!this.maps.apiKey) return;
+            await new Promise((resolve, reject) => {
+                if (document.getElementById('google-maps-sdk')) return resolve();
+                const script = document.createElement('script');
+                script.id = 'google-maps-sdk';
+                script.src = `https://maps.googleapis.com/maps/api/js?key=${this.maps.apiKey}&libraries=places`;
+                script.async = true;
+                script.defer = true;
+                script.onload = resolve;
+                script.onerror = reject;
+                document.body.appendChild(script);
+            });
+        } catch (e) {
+            console.warn('Maps SDK not loaded:', e);
+        }
+    }
+
+    initMapsAutocomplete() {
+        if (!window.google || !google.maps) return;
+        const pickupInput = document.getElementById('pickupLocation');
+        const dropoffInput = document.getElementById('dropoffLocation');
+        const mapEl = document.getElementById('map');
+        if (!pickupInput || !dropoffInput || !mapEl) return;
+        const center = this.userLocation ? { lat: this.userLocation.latitude, lng: this.userLocation.longitude } : { lat: 13.6288, lng: 79.4192 };
+        this.maps.map = new google.maps.Map(mapEl, { center, zoom: 14, mapTypeControl: false, fullscreenControl: false, streetViewControl: false });
+        this.maps.directionsService = new google.maps.DirectionsService();
+        this.maps.directionsRenderer = new google.maps.DirectionsRenderer({ map: this.maps.map });
+        const options = { fields: ['geometry','name','formatted_address'] };
+        this.maps.pickupAutocomplete = new google.maps.places.Autocomplete(pickupInput, options);
+        this.maps.dropoffAutocomplete = new google.maps.places.Autocomplete(dropoffInput, options);
+        const onChange = () => { this.validateInputs(); this.previewRoute(); };
+        this.maps.pickupAutocomplete.addListener('place_changed', onChange);
+        this.maps.dropoffAutocomplete.addListener('place_changed', onChange);
+    }
+
+    async previewRoute() {
+        if (!this.maps.directionsService || !this.maps.directionsRenderer) return;
+        const pickup = document.getElementById('pickupLocation').value.trim();
+        const drop = document.getElementById('dropoffLocation').value.trim();
+        if (!pickup || !drop) return;
+        try {
+            const result = await this.maps.directionsService.route({ origin: pickup, destination: drop, travelMode: google.maps.TravelMode.DRIVING });
+            this.maps.directionsRenderer.setDirections(result);
+        } catch (e) {
+            console.warn('Route preview failed', e);
         }
     }
 

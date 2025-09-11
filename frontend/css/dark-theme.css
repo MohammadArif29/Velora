@@ -9,9 +9,14 @@
     
     /* Dark Theme Backgrounds */
     --bg-primary: #0A0A12;
+    --bg-primary-rgb: 10, 10, 18;
     --bg-secondary: #161632;
+    --bg-secondary-rgb: 22, 22, 50;
     --surface: #161632;
+    --surface-rgb: 22, 22, 50;
     --surface-glow: #32275F;
+    --card-bg: #161632;
+    --card-bg-rgb: 22, 22, 50;
     
     /* Dark Theme Text */
     --text-primary: #F5F5F7;
